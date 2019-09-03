@@ -2,16 +2,31 @@
 from argparse import ArgumentParser
 from Bio import SeqIO
 from plasmidread import plasmid
-import pickle
+import pandas as pd
+#from scipy.spatial.distance import pdist
+
+
+defaultkmersize = 31
+
 
 def parse_cl_args():
     parser = ArgumentParser()
 
     # dest (destination) is de naam van de variable waar het argument weggeschreven wordt
-    parser.add_argument("-i", "--input-file", required=True, dest="input_file")
+    parser.add_argument(
+    "-i",
+     "--input-file",
+      required=True,
+       dest="input_file"
+       )
 
 
-    parser.add_argument("-o", "--output-file", required=True, dest="output_file")
+    parser.add_argument(
+    "-o",
+     "--output-file",
+      required=True,
+       dest="output_file"
+       )
 
 
     parser.add_argument(
@@ -19,8 +34,11 @@ def parse_cl_args():
      "--kmersize",
       required=False,
       dest="kmersize",
-      type = int
+      type = int,
+      default = defaultkmersize
+
     )
+
 
     args = parser.parse_args()
 
@@ -28,16 +46,26 @@ def parse_cl_args():
 
 
 def main():
-    input_file, output_file, kmersize = parse_cl_args()
+    input_file, output_file, kmersize,  = parse_cl_args()
 
-    if kmersize is None:
-        kmersize = 31
+    #if dissimilarity != None:
 
 
+
+
+
+    dic = {}
     for i in SeqIO.parse(input_file, 'fasta'):
         p = plasmid(str(i.seq), i.id)
         count = p.kmercount(kmersize)
-        print(count)
+        dic[i.id] = count
+
+        df = pd.DataFrame(dic).T
+        df.to_pickle(f"{output_file}.pkl")
+
+
+
+
 
 
 
