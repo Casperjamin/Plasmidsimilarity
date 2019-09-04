@@ -7,7 +7,8 @@ def reversecomp(inputseq):
     "A":"T",
     "C":"G",
     "G":"C",
-    "T":"A"
+    "T":"A",
+    "N":"N"
     }
     seq = inputseq[::-1]
 

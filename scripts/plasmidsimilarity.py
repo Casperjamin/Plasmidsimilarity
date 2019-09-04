@@ -59,11 +59,10 @@ def main():
         p = plasmid(str(i.seq), i.id)
         count = p.kmercount(kmersize)
         dic[i.id] = count
-
-        df = pd.DataFrame(dic).T
-        df.to_pickle(f"{output_file}.pkl")
-
-
+        print(f"done counting kmers of {input_file}\t ")
+    df = pd.DataFrame(dic).T
+    df.to_pickle(f"{output_file}_{kmersize}.pkl")
+    print(f"pickled the kmercounts of all sequences in{input_file}\t ")
 
 
 
