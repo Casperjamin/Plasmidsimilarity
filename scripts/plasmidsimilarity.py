@@ -36,24 +36,27 @@ def parse_cl_args():
       dest="kmersize",
       type = int,
       default = defaultkmersize
-
     )
+    parser.add_argument(
+    "-m",
+     "--merge",
+      required=False,
+      dest="merge",
+    )
+
 
 
     args = parser.parse_args()
 
-    return args.input_file, args.output_file, args.kmersize
+    return args.input_file,\
+    args.output_file,\
+    args.kmersize,\
+    args.merge
 
 
-def main():
-    input_file, output_file, kmersize,  = parse_cl_args()
+input_file, output_file, kmersize, merge = parse_cl_args()
 
-    #if dissimilarity != None:
-
-
-
-
-
+def kmercount():
     dic = {}
     for i in SeqIO.parse(input_file, 'fasta'):
         p = plasmid(str(i.seq), i.id)
@@ -64,9 +67,15 @@ def main():
     df.to_pickle(f"{output_file}_{kmersize}.pkl")
     print(f"pickled the kmercounts of all sequences in{input_file}\t ")
 
+def merger():
+    for i in input_file:
+        print(i)
 
 
 
+def main():
+    if merge != None:
+        merger()
 
 
 if __name__ == "__main__":
