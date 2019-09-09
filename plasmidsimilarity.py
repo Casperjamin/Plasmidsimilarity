@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 from argparse import ArgumentParser
-from Bio import SeqIO
-from plasmidread import plasmid
-import pandas as pd
-
-from plasmidsimilarity.plasmidread import plasmid
-#from scipy.spatial.distance import pdist
+from scripts.plasmidread import plasmid, kmercount
 
 
 defaultkmersize = 31
@@ -58,26 +53,13 @@ def parse_cl_args():
 
 input_file, output_file, kmersize, merge = parse_cl_args()
 
-def kmercount():
-    dic = {}
-    for i in SeqIO.parse(input_file, 'fasta'):
-        p = plasmid(str(i.seq), i.id)
-        count = p.kmercount(kmersize)
-        dic[i.id] = count
-        print(f"done counting kmers of {input_file}\t ")
-    df = pd.DataFrame(dic).T
-    df.to_pickle(f"{output_file}_{kmersize}.pkl")
-    print(f"pickled the kmercounts of all sequences in{input_file}\t ")
 
-def merger():
-    for i in input_file:
-        print(i)
 
 
 
 def main():
-    if merge != None:
-        merger()
+
+    kmercount(input_file, output_file, kmersize)
 
 
 if __name__ == "__main__":

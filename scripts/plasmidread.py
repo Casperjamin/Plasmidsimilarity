@@ -1,3 +1,16 @@
+from Bio import SeqIO
+import pandas as pd
+
+def kmercount(input_file, output_file, kmersize):
+    dic = {}
+    for i in SeqIO.parse(input_file, 'fasta'):
+        p = plasmid(str(i.seq), i.id)
+        count = p.kmercount(kmersize)
+        dic[i.id] = count
+        print(f"done counting kmers of {input_file}\t ")
+    df = pd.DataFrame(dic).T
+    df.to_pickle(f"{output_file}_{kmersize}.pkl")
+    print(f"pickled the kmercounts of all sequences in {input_file}\t ")
 
 
 
