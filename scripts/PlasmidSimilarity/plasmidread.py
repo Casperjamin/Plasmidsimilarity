@@ -41,6 +41,7 @@ class plasmid:
         for i in range(length):
             kmer = seq[i:i+k]
 
+            #selects lexographically first kmer between 2 reverse complementary kmers
             kmer = sorted([kmer, reversecomp(kmer)])[0]
 
             if kmer not in d:

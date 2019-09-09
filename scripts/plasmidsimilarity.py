@@ -3,6 +3,8 @@ from argparse import ArgumentParser
 from Bio import SeqIO
 from plasmidread import plasmid
 import pandas as pd
+
+from plasmidsimilarity.plasmidread import plasmid
 #from scipy.spatial.distance import pdist
 
 
