@@ -2,30 +2,24 @@
 from argparse import ArgumentParser
 from scripts.plasmidread import plasmid, kmercount
 
-
 defaultkmersize = 31
 
 
 def parse_cl_args():
     parser = ArgumentParser()
 
-    # dest (destination) is de naam van de variable waar het argument weggeschreven wordt
     parser.add_argument(
     "-i",
      "--input-file",
       required=True,
        dest="input_file"
        )
-
-
     parser.add_argument(
     "-o",
      "--output-file",
       required=True,
        dest="output_file"
        )
-
-
     parser.add_argument(
     "-k",
      "--kmersize",
@@ -41,8 +35,6 @@ def parse_cl_args():
       dest="merge",
     )
 
-
-
     args = parser.parse_args()
 
     return args.input_file,\
@@ -54,11 +46,7 @@ def parse_cl_args():
 input_file, output_file, kmersize, merge = parse_cl_args()
 
 
-
-
-
 def main():
-
     kmercount(input_file, output_file, kmersize)
 
 
