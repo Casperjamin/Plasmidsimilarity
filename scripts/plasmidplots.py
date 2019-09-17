@@ -14,6 +14,7 @@ def plot(input, output):
     print("Clustering distances ... \n ")
     Z = linkage(matrix)
 
-    dn = dendrogram(Z, orientation = "left", labels = df.index)
+    plt.figure(figsize = [10, 10])
+    dn = dendrogram(Z, orientation = "right", labels = df.index)
     plt.tight_layout()
     plt.savefig(f"{output}.png")
