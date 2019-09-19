@@ -2,8 +2,6 @@
 from argparse import ArgumentParser
 from scripts.plasmidread import plasmid, kmercount
 
-defaultkmersize = 31
-
 
 def parse_cl_args():
     parser = ArgumentParser()
@@ -12,13 +10,13 @@ def parse_cl_args():
     "-i",
      "--input-file",
       required=True,
-       dest="input_file"
+       dest="input_file",
        )
     parser.add_argument(
     "-o",
      "--output-file",
       required=True,
-       dest="output_file"
+       dest="output_file",
        )
     parser.add_argument(
     "-k",
@@ -26,7 +24,7 @@ def parse_cl_args():
       required=False,
       dest="kmersize",
       type = int,
-      default = defaultkmersize
+      default = 31,
     )
     parser.add_argument(
     "-m",

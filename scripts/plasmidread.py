@@ -5,7 +5,7 @@ def kmercount(input_file, output_file, kmersize):
     dic = {}
     for i in SeqIO.parse(input_file, 'fasta'):
         p = plasmid(str(i.seq), i.id)
-        count = p.kmercount(kmersize)
+        count = p.sequencekmercount(kmersize)
         dic[i.id] = count
         print(f"done counting kmers of {input_file}\t ")
     df = pd.DataFrame(dic).T
@@ -43,7 +43,7 @@ class plasmid:
 
 
 
-    def kmercount(self, k = 31):
+    def sequencekmercount(self, k = 31):
         #generate kmercount of plasmid DNA sequence
 
         d = {}
