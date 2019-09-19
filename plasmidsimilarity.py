@@ -6,19 +6,25 @@ from scripts.plasmidread import plasmid, kmercount
 def parse_cl_args():
     parser = ArgumentParser()
 
-    parser.add_argument(
+    subparsers = parser.add_subparsers()
+
+    subparse_kmercount = subparsers.add_parsers('kmercount')
+
+    subparse_kmercount.add_argument(
     "-i",
      "--input-file",
       required=True,
        dest="input_file",
-       )
-    parser.add_argument(
+    )
+
+    subparse_kmercount.add_argument(
     "-o",
      "--output-file",
       required=True,
        dest="output_file",
        )
-    parser.add_argument(
+
+    subparse_kmercount.add_argument(
     "-k",
      "--kmersize",
       required=False,
@@ -26,6 +32,7 @@ def parse_cl_args():
       type = int,
       default = 31,
     )
+
     parser.add_argument(
     "-m",
      "--merge",
