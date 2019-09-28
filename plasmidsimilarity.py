@@ -10,28 +10,10 @@ def parse_cl_args():
 
     subparse_kmercount = subparsers.add_parsers('kmercount')
 
-    subparse_kmercount.add_argument(
-    "-i",
-     "--input-file",
-      required=True,
-       dest="input_file",
-    )
+    subparse_kmercount.add_argument("-i", "--input-file", required=True, dest="input_file",)
+    subparse_kmercount.add_argument("-o", "--output-file",required=True, dest="output_file",)
+    subparse_kmercount.add_argument("-k", "--kmersize", required=False, dest="kmersize", type = int, default = 31,)
 
-    subparse_kmercount.add_argument(
-    "-o",
-     "--output-file",
-      required=True,
-       dest="output_file",
-       )
-
-    subparse_kmercount.add_argument(
-    "-k",
-     "--kmersize",
-      required=False,
-      dest="kmersize",
-      type = int,
-      default = 31,
-    )
 
     parser.add_argument(
     "-m",
