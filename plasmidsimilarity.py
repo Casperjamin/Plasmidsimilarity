@@ -3,38 +3,33 @@ from argparse import ArgumentParser
 from scripts.plasmidread import plasmid, kmercount
 
 
-def parse_cl_args():
+def main(command_line = None):
+    #add main parser object
     parser = ArgumentParser()
+    parser.add_argument("-v","--version", required = False, dest = "version")
 
-    subparsers = parser.add_subparsers()
+    #add sub parser object
+    subparsers = parser.add_subparsers(dest = "mode")
 
-    subparse_kmercount = subparsers.add_parsers('kmercount')
+    #add suberparser that handles kmercounting
+    count = subparsers.add_parser("count", help = "placeholder for count parser")
+    count.add_argument("-i", "--input-file", required=True, dest="input_file")
+    count.add_argument("-o", "--output-file",required=True, dest="output_file")
+    count.add_argument("-k", "--kmersize", required=False, dest="kmersize", type = int, default = 31,)
 
-    subparse_kmercount.add_argument("-i", "--input-file", required=True, dest="input_file",)
-    subparse_kmercount.add_argument("-o", "--output-file",required=True, dest="output_file",)
-    subparse_kmercount.add_argument("-k", "--kmersize", required=False, dest="kmersize", type = int, default = 31,)
-
-
-    parser.add_argument(
-    "-m",
-     "--merge",
-      required=False,
-      dest="merge",
-    )
-
-    args = parser.parse_args()
-
-    return args.input_file,\
-    args.output_file,\
-    args.kmersize,\
-    args.merge
+    #add subparser to merges the kmer counts
+    merge = subparsers.add_parser("merge", help = "placeholder for merge")
+    merge.add_argument("-i", "--input-files", required=True, dest="input_files", nargs = "+")
+    merge.add_argument("-o", "--output-file", required=True, dest="output_file")
 
 
-input_file, output_file, kmersize, merge = parse_cl_args()
+
+    args = parser.parse_args(command_line)
+    if args.mode == "count":
+        kmercount(args.input_file, args.output_file, args.kmersize)
 
 
-def main():
-    kmercount(input_file, output_file, kmersize)
+
 
 
 if __name__ == "__main__":
