@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 from argparse import ArgumentParser
-from scripts.plasmidread import plasmid, kmercount
+from scripts.plasmidread import kmercount
 from scripts.plasmidmerge import merger
-
+from scripts.plasmidplots import plot
 
 def main(command_line = None):
     #add main parser object
@@ -12,15 +12,21 @@ def main(command_line = None):
     subparsers = parser.add_subparsers(dest = "mode")
 
     #add suberparser that handles kmercounting
-    count = subparsers.add_parser("count", help = "placeholder for kmercounting")
-    count.add_argument("-i", required=True, dest="input_file")
-    count.add_argument("-o", required=True, dest="output_file")
-    count.add_argument("-k", required=False, dest="kmersize", type = int, default = 31,)
+    count = subparsers.add_parser("count", help = "Takes a fasta file and counts the occurences of kmers of specified length, it returns a pickled file containing a pandas dataframe where each fasta entry is a new row in the dataframe")
+    count.add_argument("-i", required = True, dest ="input_file")
+    count.add_argument("-o", required = True, dest = "output_file")
+    count.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31,)
 
     #add subparser to merges the kmer counts
-    merge = subparsers.add_parser("merge", help = "placeholder for merge")
-    merge.add_argument("-i", required=True, dest="inputfiles", nargs = "+")
-    merge.add_argument("-o", required=True, dest="outputfile")
+    merge = subparsers.add_parser("merge", help = "Takes multiple kmer count files and merge them into one file, required to do clustering on")
+    merge.add_argument("-i", required = True, dest = "input_files", nargs = "+")
+    merge.add_argument("-o", required = True, dest = "output_file")
+
+    #add subparser that handles the clustering and plotting
+    cluster = subparsers.add_parser("cluster", help = "Takes a merged kmercount file and cluster the sequences based on Jaccard dissimilarity, it generates a dendrogram showing the relationship among sequences")
+    cluster.add_argument("-i", required = True, dest = "input_file")
+    cluster.add_argument("-o", required = True, dest = "output_file")
+
 
 
 
@@ -28,7 +34,9 @@ def main(command_line = None):
     if args.mode == "count":
         kmercount(args.input_file, args.output_file, args.kmersize)
     elif args.mode == "merge":
-        merger(args.inputfiles, args.outputfile)
+        merger(args.input_files, args.output_file)
+    elif args.mode == "cluster":
+        plot(args.input_file, args.output_file)
     else:
         parser.print_usage()
 

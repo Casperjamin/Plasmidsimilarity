@@ -2,29 +2,36 @@ from Bio import SeqIO
 import pandas as pd
 
 def kmercount(input_file, output_file, kmersize):
-    dic = {}
+    """reads fasta file and return a pickle file containing a pandas DataFrame
+    with the kmer-counts per fasta entry
+    """
+
+    kmerdic = {}
     for i in SeqIO.parse(input_file, 'fasta'):
         p = plasmid(str(i.seq), i.id)
         count = p.sequencekmercount(kmersize)
-        dic[i.id] = count
+        kmerdic[i.id] = count
         print(f"done counting kmers of {input_file}\t ")
-    df = pd.DataFrame(dic).T
+    df = pd.DataFrame(kmerdic).T
     df.to_pickle(f"{output_file}_{kmersize}.pkl")
     print(f"pickled the kmercounts of all sequences from the file {input_file}\n ")
 
 
 
-def reversecomp(inputseq):
-    #function to generate reverse complementary of DNA seq
-    revcomp = {
+
+revcomp = {
     "A":"T",
     "C":"G",
     "G":"C",
     "T":"A",
     "N":"N"
     }
-    seq = inputseq[::-1]
 
+
+def reversecomp(inputseq):
+    #function to generate reverse complementary of DNA seq
+
+    seq = inputseq[::-1]
     revcomstring = ""
     for i in seq:
         revcomstring += revcomp[i]
