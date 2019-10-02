@@ -10,7 +10,7 @@ def kmercount(input_file, output_file, kmersize):
         print(f"done counting kmers of {input_file}\t ")
     df = pd.DataFrame(dic).T
     df.to_pickle(f"{output_file}_{kmersize}.pkl")
-    print(f"pickled the kmercounts of all sequences in {input_file}\t ")
+    print(f"pickled the kmercounts of all sequences from the file {input_file}\n ")
 
 
 
