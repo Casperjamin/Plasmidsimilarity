@@ -11,7 +11,7 @@ def main(command_line = None):
     #add sub parser object
     subparsers = parser.add_subparsers(dest = "mode")
 
-    #add suberparser that handles kmercounting
+    #add subparser that handles kmercounting
     count = subparsers.add_parser("count", help = "Takes a fasta file and counts the occurences of kmers of specified length, it returns a pickled file containing a pandas dataframe where each fasta entry is a new row in the dataframe")
     count.add_argument("-i", required = True, dest ="input_file")
     count.add_argument("-o", required = True, dest = "output_file")
