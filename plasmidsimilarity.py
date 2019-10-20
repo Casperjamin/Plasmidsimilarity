@@ -13,6 +13,14 @@ def main(command_line = None):
     #add sub parser object
     subparsers = parser.add_subparsers(dest = "mode")
 
+
+    extract = subparsers.add_parser("extract", help = "take a GFA file and output different fasta files containing binned plasmid contigs. This is based on the connectivity in the assembly graph")
+    extract.add_argument("-i", required = True, dest = "input_file")
+    extract.add_argument("-o", required = True, dest = "output_file")
+    extract.add_argument("-u", required = False, dest = "upper_limit", default = 1000000, type = int)
+    extract.add_argument("-l", required = False, dest = "lower_limit", default = 1000, type = int)
+
+
     #add suberparser that handles kmercounting
     count = subparsers.add_parser("count", help = "Takes a fasta file and counts the occurences of kmers of specified length, it returns a pickled file containing a pandas dataframe where each fasta entry is a new row in the dataframe")
     count.add_argument("-i", required = True, dest ="input_file")
@@ -29,22 +37,31 @@ def main(command_line = None):
     cluster.add_argument("-i", required = True, dest = "input_file")
     cluster.add_argument("-o", required = True, dest = "output_file")
 
-    extract = subparsers.add_parser("extract", help = "extracts plasmid contigs from GFA file, by screening for small connected contigs")
-    extract.add_argument("-i", required = True, dest = "input_file")
-    extract.add_argument("-o", required = True, dest = "output_file")
-    extract.add_argument("--complete", action = "store_true")
+
+    convert = subparsers.add_parser("convert", help = "convert a GFA to a fasta file")
+    convert.add_argument("-i", required = True, dest = "input_file")
+    convert.add_argument("-o", required = True, dest = "output_file")
 
 
     args = parser.parse_args(command_line)
     if args.mode == "count":
         kmercount(args.input_file, args.output_file, args.kmersize)
+
     elif args.mode == "merge":
         merger(args.input_files, args.output_file)
+
     elif args.mode == "cluster":
         plot(args.input_file, args.output_file)
-    elif args.mode == "extract":
+
+    elif args.mode == "convert":
+        print("Converting GFA file to FASTA")
         mygraph = graphextract.assemblygraph(args.input_file)
         mygraph.graph_to_fasta(args.output_file)
+
+    elif args.mode == "extract":
+        print("extracting plasmid contigs and output them in separate bins")
+        mygraph = graphextract.assemblygraph(args.input_file)
+        mygraph.graph_to_plasmids(args.output_file, args.lower_limit, args.upper_limit)
 
     else:
         parser.print_usage()

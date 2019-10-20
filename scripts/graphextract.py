@@ -14,10 +14,34 @@ class assemblygraph():
 
 
 
+    def graph_to_plasmids(self, outputloc, lower, upper):
+        """
+        placeholder for now
+        """
+        graphcomponents = list(nx.connected_components(self.graph))
+
+        count = 0
+        for element in graphcomponents:
+
+            size = sum([int(nx.get_node_attributes(self.graph, "weight")[str(i)]) for i in element])
+            print(f"graph element of size {size} encountered")
+            if not lower < size < upper:
+                print(f"The size of this connected component is not inside the specified range of {lower} to {upper}")
+                print("Therefore not outputting these contigs")
+            else:
+                count += 1
+                print("outputting this element into a FASTA")
+                with open(f"{outputloc}_plasmid_{count}.fasta", "w") as f:
+                    for i in element:
+                        f.write(f">{i}\n{self.contigs[str(i)]}\n")
+
+
+
 
 
 def graph_read(inputfile):
-    """take a GFA file and turn in into a networkx graph
+    """
+    take a GFA file and return a networkx graph and dictionary with the contigs
     """
     graph = nx.Graph()
     contigsdictionary = {}
