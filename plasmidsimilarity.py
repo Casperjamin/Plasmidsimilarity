@@ -3,6 +3,8 @@ from argparse import ArgumentParser
 from scripts.plasmidread import kmercount
 from scripts.plasmidmerge import merger
 from scripts.plasmidplots import plot
+from scripts import graphextract
+
 
 def main(command_line = None):
     #add main parser object
@@ -27,7 +29,10 @@ def main(command_line = None):
     cluster.add_argument("-i", required = True, dest = "input_file")
     cluster.add_argument("-o", required = True, dest = "output_file")
 
-
+    extract = subparsers.add_parser("extract", help = "extracts plasmid contigs from GFA file, by screening for small connected contigs")
+    extract.add_argument("-i", required = True, dest = "input_file")
+    extract.add_argument("-o", required = True, dest = "output_file")
+    extract.add_argument("--complete", action = "store_true")
 
 
     args = parser.parse_args(command_line)
@@ -37,6 +42,10 @@ def main(command_line = None):
         merger(args.input_files, args.output_file)
     elif args.mode == "cluster":
         plot(args.input_file, args.output_file)
+    elif args.mode == "extract":
+        mygraph = graphextract.assemblygraph(args.input_file)
+        mygraph.graph_to_fasta(args.output_file)
+
     else:
         parser.print_usage()
 
