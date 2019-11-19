@@ -66,17 +66,3 @@ def graph_read(inputfile):
                 graph.add_edge(connect1, connect2)
 
     return graph, contigsdictionary
-
-
-
-"""
-a = graph_read(inputfile = inputfile)
-
-a.nodes()
-
-comps = list(nx.connected_components(a))
-
-
-for comp in comps:
-    print(sum([int(nx.get_node_attributes(a, "weight")[str(i)]) for i in comp]))
-"""
