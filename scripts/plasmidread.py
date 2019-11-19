@@ -11,10 +11,12 @@ def kmercount(input_file, output_file, kmersize = 31):
         p = plasmid(str(i.seq), i.id)
         count = p.sequencekmercount(kmersize)
         kmerdic[i.id] = count
+
         print(f"done counting kmers of {input_file}\t ")
     df = pd.DataFrame(kmerdic).T
     df.to_hdf(f"{output_file}_{kmersize}.hdf", key = 'df', format = 'fixed')
     print(f"wrote kmercounts of all sequences from the file {input_file}\n ")
+
 
 
 

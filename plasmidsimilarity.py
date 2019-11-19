@@ -14,6 +14,7 @@ def main(command_line = None):
     subparsers = parser.add_subparsers(dest = "mode")
 
 
+
     extract = subparsers.add_parser("extract", help = "take a GFA file and output different fasta files containing binned plasmid contigs. This is based on the connectivity in the assembly graph")
     extract.add_argument("-i", required = True, dest = "input_file")
     extract.add_argument("-o", required = True, dest = "output_file")
@@ -21,7 +22,9 @@ def main(command_line = None):
     extract.add_argument("-l", required = False, dest = "lower_limit", default = 1000, type = int)
 
 
-    #add suberparser that handles kmercounting
+ 
+    #add subparser that handles kmercounting
+
     count = subparsers.add_parser("count", help = "Takes a fasta file and counts the occurences of kmers of specified length, it returns a pickled file containing a pandas dataframe where each fasta entry is a new row in the dataframe")
     count.add_argument("-i", required = True, dest ="input_file")
     count.add_argument("-o", required = True, dest = "output_file")
