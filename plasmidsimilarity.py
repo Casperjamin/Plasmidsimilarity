@@ -1,9 +1,34 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 from argparse import ArgumentParser
 from scripts.plasmidread import kmercount
 from scripts.plasmidmerge import merger
 from scripts.plasmidplots import plot
 from scripts import graphextract
+import yaml
+import os
+
+def obtain_repoloc():
+    return os.path.dirname(os.path.abspath(__file__))
+
+def get_absolute_path(path):
+    return os.path.abspath(path)
+
+locationrepo = obtain_repoloc()
+
+
+def snakemake_in(samples):
+    samplesdic = {"SAMPLES":{}}
+    for i in samples:
+        samplename = i.split("/")[-2]
+        samplesdic["SAMPLES"][samplename] = get_absolute_path(i)
+    data = yaml.dump(samplesdic, default_flow_style=False)
+    os.system(f"mkdir -p {locationrepo}/config")
+    with open(f"{locationrepo}/config/config.yaml", 'w+') as f:
+        f.write(data)
+
+
+
+
 
 
 def main(command_line = None):
@@ -13,7 +38,8 @@ def main(command_line = None):
     #add sub parser object
     subparsers = parser.add_subparsers(dest = "mode")
 
-
+    snakemake = subparsers.add_parser("snakemake", help = "run fill pipeline from fasta to merged and clustering")
+    snakemake.add_argument("-i", required = True, dest = "input_files", nargs = "+")
 
     extract = subparsers.add_parser("extract", help = "take a GFA file and output different fasta files containing binned plasmid contigs. This is based on the connectivity in the assembly graph")
     extract.add_argument("-i", required = True, dest = "input_file")
@@ -65,6 +91,12 @@ def main(command_line = None):
         print("extracting plasmid contigs and output them in separate bins")
         mygraph = graphextract.assemblygraph(args.input_file)
         mygraph.graph_to_plasmids(args.output_file, args.lower_limit, args.upper_limit)
+
+    elif args.mode == "snakemake":
+        snakemake_in(args.input_files)
+        os.chdir(f"{locationrepo}")
+        os.system(f"Snakemake --cores 4")
+
 
     else:
         parser.print_usage()
