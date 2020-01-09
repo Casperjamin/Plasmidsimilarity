@@ -1,12 +1,16 @@
 name: Plasmidsimilarity
 channels:
   - bioconda
+  - anaconda
   - conda-forge
   - defaults
   - anaconda
 dependencies:
+  - numpy
   - biopython
   - networkx
   - pandas
   - matplotlib
   - scipy
+  - pyyaml
+  - pytables

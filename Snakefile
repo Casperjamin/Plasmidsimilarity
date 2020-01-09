@@ -2,13 +2,14 @@
 configfile: "config/config.yaml"
 SAMPLES = config['SAMPLES']
 
+
 rule all:
     input:
           "results/all/merged.hdf"
 
 rule merge:
     input:
-        expand("results/{sample}/{sample}_31.hdf", sample = SAMPLES)
+        expand("results/samples/{sample}/{sample}_31.hdf", sample = SAMPLES)
     output:
         "results/all/merged.hdf"
     log:
@@ -24,12 +25,12 @@ rule count:
     input:
          lambda wildcards: SAMPLES[wildcards.sample]
     output:
-          "results/{sample}/{sample}_31.hdf"
+          "results/samples/{sample}/{sample}_31.hdf"
     params:
         name = "results/{sample}/{sample}",
         kmersize = 31
     log:
-        "logs/count/{sample}.txt"
+        "logs/count/{sample}_log.txt"
     conda:
         "envs/plasmidsimilarity.yaml"
     shell:
