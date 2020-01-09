@@ -1,4 +1,3 @@
-import Bio
 
 configfile: "config/config.yaml"
 SAMPLES = config['SAMPLES']
