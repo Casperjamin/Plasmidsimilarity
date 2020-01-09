@@ -1,10 +1,14 @@
-
+#macOS
 .DS_Store
+*.icloud
 
-__pycache__
+#snakemake stuff
+.snakemake/*
+
 
 #python bytecode
 *pyc
+__pycache__
 
 #jupyter notebook stuff
 *ipynb*
