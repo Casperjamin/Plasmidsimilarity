@@ -1,4 +1,4 @@
-name: Plasmidsimilarity
+name: plasmidsimilarity
 channels:
   - bioconda
   - anaconda
@@ -6,7 +6,8 @@ channels:
   - defaults
   - anaconda
 dependencies:
-  - numpy
+  - snakemake
+  - numpy=1.13
   - biopython
   - networkx
   - pandas

@@ -43,14 +43,10 @@ def reversecomp(inputseq):
 
 class plasmid:
     def __init__(self, sequence, name):
-
         self.sequence = sequence.upper()
         self.name = name
-
     def seq(self):
         return self.sequence
-
-
 
     def sequencekmercount(self, k = 31):
         #generate kmercount of plasmid DNA sequence

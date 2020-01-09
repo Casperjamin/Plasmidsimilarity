@@ -6,6 +6,9 @@ from scripts.plasmidplots import plot
 from scripts import graphextract
 import yaml
 import os
+import sys
+
+
 
 def obtain_repoloc():
     return os.path.dirname(os.path.abspath(__file__))
@@ -22,7 +25,6 @@ def snakemake_in(samples):
         samplename = i.split("/")[-2]
         samplesdic["SAMPLES"][samplename] = get_absolute_path(i)
     data = yaml.dump(samplesdic, default_flow_style=False)
-    os.system(f"mkdir -p {locationrepo}/config")
     with open(f"{locationrepo}/config/config.yaml", 'w+') as f:
         f.write(data)
 
@@ -96,7 +98,7 @@ def main(command_line = None):
     elif args.mode == "snakemake":
         snakemake_in(args.input_files)
         os.chdir(f"{locationrepo}")
-        os.system(f"Snakemake --use-conda --cores 4")
+        os.system(f"Snakemake --cores 4")
 
 
     else:
