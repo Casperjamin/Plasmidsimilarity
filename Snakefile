@@ -8,7 +8,8 @@ SAMPLES = config['SAMPLES']
 rule all:
     input:
         "results/all/merged.hdf",
-        "results/all/abricate_results.tsv"
+        "results/all/abricate_results.tsv",
+        "results/all/report"
 
 #################################
 # kmer counting and merging and cluster
@@ -44,7 +45,7 @@ rule cluster:
     input:
         "results/all/merged.hdf"
     output:
-
+        directory("results/all/report")
     shell:
         "python ./plasmidsimilarity.py cluster -i {input} -o {output}"
 

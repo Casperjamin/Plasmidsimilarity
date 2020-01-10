@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-from argparse import ArgumentParser
-from scripts.plasmidread import kmercount
-from scripts.plasmidmerge import merger
-from scripts.plasmidplots import plot
-from scripts import graphextract
-import yaml
 import os
-import sys
+from argparse import ArgumentParser
 
+import yaml
+
+from scripts import plasmidplots
+from scripts import graphextract
+from scripts.plasmidmerge import merger
+from scripts.plasmidread import kmercount
 
 
 def obtain_repoloc():
@@ -45,7 +45,7 @@ def main(command_line = None):
     snakemake.add_argument("-i", required = True, dest = "input_files", nargs = "+")
 
 
-    #add suberparser for extracting plasmidlike elements from assembly graph
+    #add subparser for extracting plasmidlike elements from assembly graph
     extract = subparsers.add_parser("extract", help = "take a GFA file and output different fasta files containing binned plasmid contigs. This is based on the connectivity in the assembly graph")
     extract.add_argument("-i", required = True, dest = "input_file")
     extract.add_argument("-o", required = True, dest = "output_file")
@@ -90,7 +90,7 @@ def main(command_line = None):
         merger(args.input_files, args.output_file)
 
     elif args.mode == "cluster":
-        plot(args.input_file, args.output_file)
+        plasmidplots.cluster(args.input_file, args.output_file)
 
     elif args.mode == "convert":
         print("Converting GFA file to FASTA")
