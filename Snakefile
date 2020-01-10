@@ -10,6 +10,10 @@ rule all:
         "results/all/merged.hdf",
         "results/all/abricate_results.tsv"
 
+#################################
+# kmer counting and merging and cluster
+#################################
+
 rule merge:
     input:
         expand("results/samples/{sample}/{sample}_31.hdf", sample = SAMPLES)
@@ -35,6 +39,19 @@ rule count:
     shell:
          "python ./plasmidsimilarity.py count -i {input} -o {params.name} -k {params.kmersize} 2> {log}"
 
+
+rule cluster:
+    input:
+        "results/all/merged.hdf"
+    output:
+
+    shell:
+        "python ./plasmidsimilarity.py cluster -i {input} -o {output}"
+
+
+#################################
+# AMR and plasmid ORI abricate
+#################################
 rule abricate:
     input:
         lambda wildcards: SAMPLES[wildcards.sample]
@@ -67,6 +84,6 @@ rule summarize_abricate:
     run:
         data = [abricate_summary.AbricateSample(x).clean for x in input]
         df = abricate_summary.AbricateSummary(data).dataframe(covcutoff= params.covcutoff, idcutoff = params.idcutoff)
-        print(df)
-        print(output)
-        df.to_csv(output, sep = "\t")
+        df.to_csv(f"{output}", sep = "\t")
+
+
