@@ -25,10 +25,12 @@ def snakemake_in(samples):
         samplename = i.split("/")[-2]
         samplesdic["SAMPLES"][samplename] = get_absolute_path(i)
     data = yaml.dump(samplesdic, default_flow_style=False)
-    with open(f"{locationrepo}/config/config.yaml", 'w+') as f:
+    with open(f"{locationrepo}/config/config.yaml", 'w') as f:
         f.write(data)
 
-
+####################
+# Command line Parsers initialization
+####################
 
 def main(command_line = None):
     #add main parser object
@@ -74,6 +76,11 @@ def main(command_line = None):
     convert.add_argument("-i", required = True, dest = "input_file")
     convert.add_argument("-o", required = True, dest = "output_file")
 
+
+
+####################
+# parsing part
+####################
 
     args = parser.parse_args(command_line)
     if args.mode == "count":
