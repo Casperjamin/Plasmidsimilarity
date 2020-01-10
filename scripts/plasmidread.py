@@ -1,25 +1,26 @@
 from Bio import SeqIO
 import pandas as pd
 
-def kmercount(input_file, output_file, kmersize = 31):
-    """reads fasta file and return a pickle file containing a pandas DataFrame
-    with the kmer-counts per fasta entry
-    """
+class plasmid:
+    def __init__(self, sequence, name):
+        self.sequence = sequence.upper()
+        self.name = name
+    def seq(self):
+        return self.sequence
 
-    kmerdic = {}
-    for i in SeqIO.parse(input_file, 'fasta'):
-        p = plasmid(str(i.seq), i.id)
-        count = p.sequencekmercount(kmersize)
-        kmerdic[i.id] = count
-
-        print(f"done counting kmers of {input_file}\t ")
-    df = pd.DataFrame(kmerdic).T
-    print(df)
-    df.to_hdf(f"{output_file}_{kmersize}.hdf", key = 'df', format = 'fixed')
-    print(f"wrote kmercounts of all sequences from the file {input_file}\n ")
-
-
-
+    def sequencekmercount(self, k = 31):
+        #generate kmercount of plasmid DNA sequence
+        d = {}
+        seq = self.sequence
+        length = len(seq) - k + 1
+        for i in range(length):
+            kmer = seq[i:i+k]
+            #selects lexographically lowest kmer between a kmer and its reverse complement
+            kmer = sorted([kmer, reversecomp(kmer)])[0]
+            if kmer not in d:
+                d[kmer] = 0
+            d[kmer] += 1
+        return d
 
 
 revcomp = {
@@ -42,29 +43,26 @@ def reversecomp(inputseq):
     return revcomstring
 
 
-class plasmid:
-    def __init__(self, sequence, name):
-        self.sequence = sequence.upper()
-        self.name = name
-    def seq(self):
-        return self.sequence
 
-    def sequencekmercount(self, k = 31):
-        #generate kmercount of plasmid DNA sequence
 
-        d = {}
-        seq = self.sequence
+def kmercount(input_file, output_file, kmersize = 31):
+    """reads fasta file and return a pickle file containing a pandas DataFrame
+    with the kmer-counts per fasta entry
+    """
 
-        length = len(seq) - k + 1
+    kmerdic = {}
+    for i in SeqIO.parse(input_file, 'fasta'):
+        p = plasmid(str(i.seq), i.id)
+        count = p.sequencekmercount(kmersize)
+        kmerdic[i.id] = count
 
-        for i in range(length):
-            kmer = seq[i:i+k]
+        print(f"done counting kmers of {input_file}\t ")
 
-            #selects lexographically lowest kmer between a kmer and its reverse complement
-            kmer = sorted([kmer, reversecomp(kmer)])[0]
+    df = pd.DataFrame(kmerdic)
+    df.head()
+    df.columns = [output_file.split("/")[-1]]
+    df = df.T
+    df.to_hdf(f"{output_file}_{kmersize}.hdf", key = 'df', format = 'fixed')
+    print(f"wrote kmercounts of all sequences from the file {input_file}\n ")
 
-            if kmer not in d:
-                d[kmer] = 0
-            d[kmer] += 1
 
-        return d

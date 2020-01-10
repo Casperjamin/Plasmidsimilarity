@@ -33,7 +33,7 @@ rule count:
     output:
           "results/samples/{sample}/{sample}_31.hdf"
     params:
-        name = "results/samples/l {sample}/{sample}",
+        name = "results/samples/{sample}/{sample}",
         kmersize = 31
     log:
         "logs/count/{sample}_log.txt"
