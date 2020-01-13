@@ -71,7 +71,7 @@ def main(command_line = None):
     cluster.add_argument("-i", required = True, dest = "input_file")
     cluster.add_argument("-o", required = True, dest = "output_file")
 
-
+    #add subparser to convert a gfa to fasta
     convert = subparsers.add_parser("convert", help = "convert a GFA to a fasta file")
     convert.add_argument("-i", required = True, dest = "input_file")
     convert.add_argument("-o", required = True, dest = "output_file")
