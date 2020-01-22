@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
 from argparse import ArgumentParser
-
 import yaml
 
 from scripts import plasmidplots

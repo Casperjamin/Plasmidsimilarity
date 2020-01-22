@@ -4,9 +4,19 @@ from scipy.spatial.distance import pdist, squareform
 import matplotlib.pyplot as plt
 import os
 
+
+
+def write_leaves_order(list_of_leaves, outdir):
+    with open(f'{outdir}/leaforder.txt',  'w+') as f:
+        for i in list_of_leaves:
+            f.writelines(i + '\n')
+
+
 def plottree(output, cluster, labels):
     dn = plt.figure(figsize=[10, 10])
     dn = dendrogram(cluster, orientation="right", labels=labels)
+    list_of_leaves = labels[dn['leaves']]
+    write_leaves_order(list_of_leaves = list_of_leaves, outdir = output)
     dn = plt.tight_layout()
     dn = plt.savefig(f"{output}/tree.png")
 
@@ -14,7 +24,7 @@ def generate_pairwise_distance(matrix, df, output):
     labeledmatrix = pd.DataFrame(squareform(matrix), index = df.index, columns = df.index)
     labeledmatrix = labeledmatrix.unstack().reset_index()
     labeledmatrix.to_csv(f"{output}/distances.tsv", sep = "\t")
-    print(labeledmatrix)
+
 
 def dataframe_to_clusters(input):
     print("Reading merged kmercounts\n")

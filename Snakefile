@@ -1,4 +1,4 @@
-from scripts import abricate_summary
+from scripts import abricate_summary, heatmap
 
 
 configfile: "config/config.yaml"
@@ -9,7 +9,7 @@ rule all:
     input:
         "results/all/merged.hdf",
         "results/all/abricate_results.tsv",
-        "results/all/report"
+        "results/all/report/heatmap_AMR_ori.png"
 
 #################################
 # kmer counting and merging and cluster
@@ -40,14 +40,16 @@ rule count:
     shell:
          "python ./plasmidsimilarity.py count -i {input} -o {params.name} -k {params.kmersize} 2> {log}"
 
-
 rule cluster:
     input:
         "results/all/merged.hdf"
     output:
-        directory("results/all/report")
+        "results/all/report/tree.png",
+        "results/all/report/leaforder.txt"
+    params:
+        "results/all/report"
     shell:
-        "python ./plasmidsimilarity.py cluster -i {input} -o {output}"
+        "python ./plasmidsimilarity.py cluster -i {input} -o {params}"
 
 
 #################################
@@ -87,4 +89,11 @@ rule summarize_abricate:
         df = abricate_summary.AbricateSummary(data).dataframe(covcutoff= params.covcutoff, idcutoff = params.idcutoff)
         df.to_csv(f"{output}", sep = "\t")
 
-
+rule heatmap_abricate:
+    input:
+        heatmap = "results/all/abricate_results.tsv",
+        leaforder = "results/all/report/leaforder.txt"
+    output:
+        "results/all/report/heatmap_AMR_ori.png"
+    run:
+        heatmap.generate_heatmap(str(input.heatmap), str(input.leaforder), str(output))
