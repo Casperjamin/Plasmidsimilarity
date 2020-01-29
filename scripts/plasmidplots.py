@@ -13,11 +13,15 @@ def write_leaves_order(list_of_leaves, outdir):
 
 
 def plottree(output, cluster, labels):
-    dn = plt.figure(figsize=[10, 10])
+    width = 10
+    height = len(labels) * 0.2
+    dn = plt.figure(figsize=[width, height])
     dn = dendrogram(cluster, orientation="right", labels=labels)
     list_of_leaves = labels[dn['leaves']]
     write_leaves_order(list_of_leaves = list_of_leaves, outdir = output)
+    plt.xlabel("Jaccard dissimilarity")
     dn = plt.tight_layout()
+
     dn = plt.savefig(f"{output}/tree.png")
 
 def generate_pairwise_distance(matrix, df, output):

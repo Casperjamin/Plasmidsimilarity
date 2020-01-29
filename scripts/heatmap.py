@@ -19,7 +19,9 @@ def read_leaf_order(leaforder):
     return order
 
 def make_heatmap(df, output):
-    plt.figure(figsize = [10,10])
+    width = len(df.T) * 0.3
+    height = len(df) * 0.2
+    plt.figure(figsize = [width,height])
     plt.title('Heatmap of AMR genes and plasmid ORIs')
     sns.heatmap(df, cmap = "YlGnBu", linewidth = 0.5, linecolor = 'black')
     plt.xticks(rotation=90)
