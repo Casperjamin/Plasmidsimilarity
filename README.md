@@ -15,7 +15,9 @@ For now, easiest way to compare multiple plasmid sequences is to use the "plasmi
 The name of these subdirecties will be use for naming the samples  
 actual usage:   
 ```
-python ./plasmidsimilarity snakemake -i YOUR/INPUT/DIRECTORY
+git clone https://hithub.com/casperjamin/plasmidsimilarity.git
+cd plasmidsimilarity
+python ./plasmidsimilarity.py snakemake -i YOUR/INPUT/DIRECTORY
 ```
 
 results will be shown in the results folder within this repo/directory
