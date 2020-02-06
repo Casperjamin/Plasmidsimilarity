@@ -39,9 +39,9 @@ python packages
 * pytables  
 * networkx      
 * matplotlib
-* seaborn.  
-* scipy.
-* Biopython.  
+* seaborn 
+* scipy  
+* Biopython    
 
 
 
