@@ -1,7 +1,7 @@
 # Plasmidsimilarity
 set of scripts to analyse and visualise plasmid sequences
 
-## Work in process, feel free to
+## Work in process, feel free to post issues or contribute 
 
 
 the concept of comparing and/or clustering of plasmid sequences is by comparing all subsequences of length K (=Kmers) and computing jaccard dissimilarity.  
