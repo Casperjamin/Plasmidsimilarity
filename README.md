@@ -27,6 +27,7 @@ results will be shown in the results folder within this repo/directory
 
 
 To do:  
+* get kmers from part of the contig that joins up the beginning and the end of a sequence (--> plasmids are circular) 
 * write complete manual
 * version numbering
 * come up with a suitable way to handle output directory with Snakemake
