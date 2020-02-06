@@ -24,6 +24,8 @@ python ./plasmidsimilarity.py snakemake -i YOUR/INPUT/DIRECTORY
 results will be shown in the results folder within this repo/directory
 
 
+
+
 To do:  
 * write complete manual
 * version numbering
