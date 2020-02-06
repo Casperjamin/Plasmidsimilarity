@@ -37,8 +37,8 @@ To do:
 
 Requirements:  
 * python 3.6 or higher  
-* Abricate  for AMR and plasmid information
-if you use the "plasmidsimilarity.py snakemake"  wrapper, you also need Snakemake to be installed.  
+* Abricate  for AMR and plasmid information  
+If you use the "plasmidsimilarity.py snakemake"  wrapper, you also need Snakemake to be installed.  
 
 python packages  
 * pandas
