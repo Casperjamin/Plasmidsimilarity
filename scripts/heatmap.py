@@ -7,7 +7,7 @@ def generate_heatmap(abricateAMR, leaforder, output):
     df = pd.read_csv(abricateAMR, sep = "\t", index_col = 0)
     order = read_leaf_order(leaforder)
     order = order[::-1] #reverse to match with dendrogram leaves
-    df = df.loc[order]
+    df = df.reindex(order)
     make_heatmap(df, output)
 
 

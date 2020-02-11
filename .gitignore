@@ -7,6 +7,7 @@
 config/*
 results/*
 logs/*
+config/config.yaml
 
 #python bytecode
 *pyc
