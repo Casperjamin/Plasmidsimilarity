@@ -12,7 +12,7 @@ class AbricateSample:
         return df
 
     def cleanname(self, name):
-        name = name.split("/")[-2]
+        name = name.split("/")[-1].strip(".fasta")
         return name
 
 

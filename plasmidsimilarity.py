@@ -21,7 +21,7 @@ locationrepo = obtain_repoloc()
 def snakemake_in(samples):
     samplesdic = {"SAMPLES":{}}
     for i in samples:
-        samplename = i.split("/")[-2]
+        samplename = i.split("/")[-1].strip(".fasta")
         samplesdic["SAMPLES"][samplename] = get_absolute_path(i)
     data = yaml.dump(samplesdic, default_flow_style=False)
     os.system(f"mkdir -p {locationrepo}/config")
@@ -105,7 +105,7 @@ def main(command_line = None):
     elif args.mode == "snakemake":
         snakemake_in(args.input_files)
         os.chdir(f"{locationrepo}")
-        os.system(f"Snakemake --cores 4")
+        os.system(f"snakemake --cores 4")
 
 
     else:
