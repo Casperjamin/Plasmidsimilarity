@@ -30,7 +30,7 @@ usage:
 python ./plasmidsimilarity.py extract -i yourassemblygraph.gfa -o outdir/outputname
 ```
 this will dump each plasmidlike element in a single fasta file with name format 'outputname_plasmid_#.fasta'   
-
+warning: this does however also extract all contamination, or mis-assemblies. it works best with proper circularized assemblies, from unicycler for instance.
 
 
 
