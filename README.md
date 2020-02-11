@@ -35,7 +35,7 @@ this will dump each plasmidlike element in a single fasta file with name format 
 
 
 
-To do:  
+## To do:  
 * get kmers from part of the contig that joins up the beginning and the end of a sequence (--> plasmids are circular) 
 * write complete manual
 * version numbering
@@ -44,7 +44,7 @@ To do:
 
 
 
-Requirements:  
+## Requirements:  
 * python 3.6 or higher  
 * Abricate  for AMR and plasmid information  
 If you use the "plasmidsimilarity.py snakemake"  wrapper, you also need Snakemake to be installed.  
