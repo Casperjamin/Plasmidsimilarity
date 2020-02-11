@@ -24,6 +24,7 @@ def snakemake_in(samples):
         samplename = i.split("/")[-2]
         samplesdic["SAMPLES"][samplename] = get_absolute_path(i)
     data = yaml.dump(samplesdic, default_flow_style=False)
+    os.system(f"mkdir -p {locationrepo}/config")
     with open(f"{locationrepo}/config/config.yaml", 'w') as f:
         f.write(data)
 
@@ -56,7 +57,7 @@ def main(command_line = None):
     count = subparsers.add_parser("count", help = "Takes a fasta file and counts the occurences of kmers of specified length, it returns a pickled file containing a pandas dataframe where each fasta entry is a new row in the dataframe")
     count.add_argument("-i", required = True, dest ="input_file")
     count.add_argument("-o", required = True, dest = "output_file")
-    count.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31,)
+    count.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
 
 
     #add subparser to merges the kmer counts
