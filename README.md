@@ -22,6 +22,16 @@ python ./plasmidsimilarity.py snakemake -i plasmidseq1.fasta plasmidseq2.fasta p
 
 results will be shown in the results folder within this repo/directory
 
+## Extracting plasmid-like sequences from asssembly graphs (in gfa format)
+
+Plasmidsimilarity has as built-in method to extract small elements from an assembly graph.  
+usage:
+```
+python ./plasmidsimilarity.py extract -i yourassemblygraph.gfa -o outdir/outputname
+```
+this will dump each plasmidlike element in a single fasta file with name format 'outputname_plasmid_#.fasta'   
+
+
 
 
 
