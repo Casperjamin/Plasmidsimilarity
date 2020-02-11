@@ -9,7 +9,7 @@ From here one can generate a dendrogram indicating the dissimilarity among al pl
 
 
 
-## usage
+## Basic usage
 
 For now, easiest way to compare multiple plasmid sequences is to use the "plasmidsimilarity.py snakemake" wrapper. for this you need to supply the script with a list of plasmid sequences in fasta format
 
