@@ -6,8 +6,12 @@ SAMPLES = config['SAMPLES']
 
 
 onstart:
-    print("Will generate plasmid (dis)simularities for the following files:")
-
+    print("This is PlasmidSimilarity:")
+    time.sleep(1)
+    print('Checking number of input files...\n')
+    if len(SAMPLES) < 2:
+        raise Exception(f'Not enough input files given. \n')
+    print("Will generate plasmid (dis)similarities for the following files:")
     for i in SAMPLES.items():
         print(i[0], '\t', i[1])
 
