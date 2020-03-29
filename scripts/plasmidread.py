@@ -76,6 +76,7 @@ def kmercount(input_file, output_file, kmersize = 31, circular = False):
         number_of_contigs += 1
         kmerdict = seq_to_kmercount(sequence, kmerdict = kmerdict, kmersize = kmersize)
 
+    # generate counts of kmers on the overlapping part of a contig's end and beginning
     if number_of_contigs == 1 & circular == True:
         overlapping_sequence = overlapper(sequence)
         kmerdict = seq_to_kmercount(overlapping_sequence, kmerdict = kmerdict, kmersize = kmersize)
