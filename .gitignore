@@ -7,7 +7,7 @@
 config/*
 results/*
 logs/*
-config/config.yaml
+config/*
 
 #python bytecode
 *pyc
@@ -16,4 +16,3 @@ __pycache__
 #jupyter notebook stuff
 *ipynb*
 assembly.gfa
-

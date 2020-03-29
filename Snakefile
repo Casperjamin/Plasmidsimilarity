@@ -1,8 +1,18 @@
 from scripts import abricate_summary, heatmap
-
+import time
 
 configfile: "config/config.yaml"
 SAMPLES = config['SAMPLES']
+
+
+onstart:
+    print("Will generate plasmid (dis)simularities for the following files:")
+
+    for i in SAMPLES.items():
+        print(i[0], '\t', i[1])
+
+    time.sleep(5)
+
 
 
 rule all:
