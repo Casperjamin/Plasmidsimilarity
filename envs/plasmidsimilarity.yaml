@@ -4,7 +4,6 @@ channels:
   - anaconda
   - conda-forge
   - defaults
-  - anaconda
 dependencies:
   - snakemake
   - numpy=1.13
