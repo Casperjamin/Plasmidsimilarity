@@ -51,7 +51,7 @@ def generate_output(kmer_dataframe, output_file, kmersize):
     take kmer_dataframe of dictionaries of kmercounts, generate output files
     """
     kmer_dataframe.columns = [output_file.split("/")[-1]]
-    kmer_dataframe = df.T
+    kmer_dataframe = kmer_dataframe.T
     kmer_dataframe.to_hdf(f"{output_file}_{kmersize}.hdf", key = 'df', format = 'fixed')
     print(f"wrote kmercounts of all sequences from the file {input_file}\n ")
 
