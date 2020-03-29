@@ -105,7 +105,7 @@ def main(command_line = None):
     elif args.mode == "snakemake":
         snakemake_in(args.input_files)
         os.chdir(f"{locationrepo}")
-        os.system(f"snakemake --cores 4")
+        os.system(f"snakemake --cores 4 --use-conda")
 
 
     else:
