@@ -61,12 +61,8 @@ def overlapper(sequence,kmersize):
     return the sequence that overlaps from the end to the beginning
     required for complete k-mer counting
     """
-
     end = sequence[-(kmersize -1):]
     beginning = sequence[:kmersize-1]
-    print(len(end), end)
-    print(len(beginning), beginning)
-
     return end + beginning
 
 
