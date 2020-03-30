@@ -66,7 +66,6 @@ def overlapper(sequence,kmersize):
     return end + beginning
 
 
-
 def kmercount(input_file, output_file, kmersize = 31, circular = True):
     """
     reads fasta file and return a hdf file containing a pandas DataFrame
