@@ -1,5 +1,5 @@
 # Plasmidsimilarity
-set of scripts to analyse and visualise plasmid sequences
+set of scripts to analyse similarity among plasmid sequences
 
 ## Work in process, feel free to post issues or contribute 
 
