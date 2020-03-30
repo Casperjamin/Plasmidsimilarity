@@ -2,6 +2,7 @@
 import os
 from argparse import ArgumentParser
 import yaml
+import os
 
 from scripts import plasmidplots
 from scripts import graphextract
@@ -18,10 +19,15 @@ def get_absolute_path(path):
 locationrepo = obtain_repoloc()
 
 
+def file_name_generator(filepath):
+    return os.path.splitext(os.path.basename(filepath))[0]
+
+
+
 def snakemake_in(samples):
     samplesdic = {"SAMPLES":{}}
     for i in samples:
-        samplename = i.split("/")[-1].strip(".fasta")
+        samplename = file_name_generator(i)
         samplesdic["SAMPLES"][samplename] = get_absolute_path(i)
     data = yaml.dump(samplesdic, default_flow_style=False)
     os.system(f"mkdir -p {locationrepo}/config")
