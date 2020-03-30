@@ -1,5 +1,7 @@
 from Bio import SeqIO
 import pandas as pd
+import warnings
+
 
 def reversecomp(inputseq):
     # generate reverse complementary of DNA seq
@@ -72,9 +74,6 @@ def kmercount(input_file, output_file, kmersize = 31, circular = True):
     with the kmer-counts per fasta entry
     """
     inputfilename = input_file.split('/')[-1].strip('.fasta')
-    if multiplecontigs(input_file):
-        # assesment of circular plasmids is considered false if more than 1 contig is present
-        circular = False
 
     kmerdict = {}
 
@@ -85,6 +84,19 @@ def kmercount(input_file, output_file, kmersize = 31, circular = True):
         kmerdict = seq_to_kmercount(seq = sequence, kmerdict = kmerdict, kmersize = kmersize)
 
     # generate counts of kmers on the overlapping part of a contig's end and beginning
+    if number_of_contigs > 1 & circular == True:
+        warnings.warn(
+        f'''
+        "You specified circularized plasmids,in {input_file}.
+         but I encounterd multiple contigs...
+         If you actually have circular plasmids, please provide fasta file with only 1 contig
+         For now I will consider non-circularized plasmid sequences therefore not counting kmers from the end of the contig to the beginning.
+         ''')
+
+    if multiplecontigs(input_file):
+        # assesment of circular plasmids is considered false if more than 1 contig is present
+        circular = False
+
     if number_of_contigs == 1 & circular == True:
         overlapping_sequence = overlapper(sequence = sequence, kmersize = kmersize)
         kmerdict = seq_to_kmercount(seq = overlapping_sequence, kmerdict = kmerdict, kmersize = kmersize)
