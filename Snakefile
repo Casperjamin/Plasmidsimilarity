@@ -1,12 +1,13 @@
 from scripts import abricate_summary, heatmap
 import time
-
+import os
 configfile: "config/config.yaml"
 SAMPLES = config['SAMPLES']
 
 
 onstart:
     print("This is PlasmidSimilarity:")
+    os.system("cat logo.txt")
     time.sleep(1)
     print('Checking number of input files...\n')
     if len(SAMPLES) < 2:
