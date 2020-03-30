@@ -35,12 +35,10 @@ warning: this does however also extract all contamination, or mis-assemblies. it
 
 
 
-## To do:  
-* get kmers from part of the contig that joins up the beginning and the end of a sequence (--> plasmids are circular) 
+## To do:   
 * write complete manual
 * version numbering
 * come up with a suitable way to handle output directory with Snakemake
-* specify number of cores in snakemake mode
 
 
 
