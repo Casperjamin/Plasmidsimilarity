@@ -1,8 +1,23 @@
 from scripts import abricate_summary, heatmap
-
-
+import time
+import os
 configfile: "config/config.yaml"
 SAMPLES = config['SAMPLES']
+
+
+onstart:
+    print("This is PlasmidSimilarity:")
+    os.system("cat logo.txt")
+    time.sleep(1)
+    print('Checking number of input files...\n')
+    if len(SAMPLES) < 2:
+        raise Exception(f'Not enough input files given. \n')
+    print("Will generate plasmid (dis)similarities for the following files:")
+    for i in SAMPLES.items():
+        print(i[0], '\t', i[1])
+
+    time.sleep(5)
+
 
 
 rule all:
@@ -38,7 +53,7 @@ rule count:
     log:
         "logs/count/{sample}_log.txt"
     shell:
-         "python ./plasmidsimilarity.py count -i {input} -o {params.name} -k {params.kmersize} 2> {log}"
+         "python ./plasmidsimilarity.py count -i {input} -o {params.name} -k {params.kmersize} -c 2> {log}"
 
 rule cluster:
     input:
