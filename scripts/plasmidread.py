@@ -55,7 +55,23 @@ def generate_output(kmer_dataframe, output_file, kmersize):
     kmer_dataframe.to_hdf(f"{output_file}_{kmersize}.hdf", key = 'df', format = 'fixed')
 
 
-def kmercount(input_file, output_file, kmersize = 31, circular = False):
+def overlapper(sequence,kmersize):
+    """
+    take a fasta sequence and kmersize,
+    return the sequence that overlaps from the end to the beginning
+    required for complete k-mer counting
+    """
+
+    end = sequence[-(kmersize -1):]
+    beginning = sequence[:kmersize-1]
+    print(len(end), end)
+    print(len(beginning), beginning)
+
+    return end + beginning
+
+
+
+def kmercount(input_file, output_file, kmersize = 31, circular = True):
     """
     reads fasta file and return a hdf file containing a pandas DataFrame
     with the kmer-counts per fasta entry
@@ -71,16 +87,14 @@ def kmercount(input_file, output_file, kmersize = 31, circular = False):
     for i in SeqIO.parse(input_file, 'fasta'):
         sequence = i.seq
         number_of_contigs += 1
-        kmerdict = seq_to_kmercount(sequence, kmerdict = kmerdict, kmersize = kmersize)
+        kmerdict = seq_to_kmercount(seq = sequence, kmerdict = kmerdict, kmersize = kmersize)
 
     # generate counts of kmers on the overlapping part of a contig's end and beginning
     if number_of_contigs == 1 & circular == True:
-        overlapping_sequence = overlapper(sequence)
-        kmerdict = seq_to_kmercount(overlapping_sequence, kmerdict = kmerdict, kmersize = kmersize)
+        overlapping_sequence = overlapper(sequence = sequence, kmersize = kmersize)
+        kmerdict = seq_to_kmercount(seq = overlapping_sequence, kmerdict = kmerdict, kmersize = kmersize)
 
     series = pd.Series(kmerdict, name = inputfilename)
     df = pd.DataFrame(series)
-    print(df.head())
-    print(input_file)
     print(f"done counting kmers of {input_file}\t ")
     generate_output(df, output_file = output_file, kmersize = kmersize)
