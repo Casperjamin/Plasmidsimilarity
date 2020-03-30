@@ -80,9 +80,9 @@ def kmercount(input_file, output_file, kmersize = 31, circular = True):
     number_of_contigs = 0
     for i in SeqIO.parse(input_file, 'fasta'):
         sequence = i.seq
-        if sequence < kmersize:
+        if len(sequence) < kmersize:
             continue
-    
+
         number_of_contigs += 1
         kmerdict = seq_to_kmercount(seq = sequence, kmerdict = kmerdict, kmersize = kmersize)
 
