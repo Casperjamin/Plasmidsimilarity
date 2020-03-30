@@ -43,7 +43,7 @@ def main(command_line = None):
     #add snakemake pipeline to completely run fasta to clustered output
     snakemake = subparsers.add_parser("snakemake", help = "run fill pipeline from fasta to merged and clustering")
     snakemake.add_argument("-i", required = True, dest = "input_files", nargs = "+")
-
+    snakemake.add_argument("--cores", dest = 'cores', required = True, type = int, help = 'Number of CPU cores to use')
 
     #add subparser for extracting plasmidlike elements from assembly graph
     extract = subparsers.add_parser("extract", help = "take a GFA file and output different fasta files containing binned plasmid contigs. This is based on the connectivity in the assembly graph")
@@ -58,6 +58,7 @@ def main(command_line = None):
     count.add_argument("-i", required = True, dest ="input_file")
     count.add_argument("-o", required = True, dest = "output_file")
     count.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
+    count.add_argument("-c", required = False, dest = "circular", action = 'store_true', default = False, help = 'if marked, sequences are considered circular and therefore the part of the sequence going from the end to the beginning of the contig will be used for kmer counting')
 
 
     #add subparser to merges the kmer counts
@@ -84,7 +85,13 @@ def main(command_line = None):
 
     args = parser.parse_args(command_line)
     if args.mode == "count":
-        kmercount(args.input_file, args.output_file, args.kmersize)
+        kmercount(
+        input_file = args.input_file,
+        output_file = args.output_file,
+        kmersize = args.kmersize,
+        circular = args.circular
+        )
+
 
     elif args.mode == "merge":
         merger(args.input_files, args.output_file)
@@ -105,8 +112,7 @@ def main(command_line = None):
     elif args.mode == "snakemake":
         snakemake_in(args.input_files)
         os.chdir(f"{locationrepo}")
-        os.system(f"snakemake --cores 4 --use-conda")
-
+        os.system(f"snakemake --cores {args.cores} --use-conda")
 
     else:
         parser.print_usage()

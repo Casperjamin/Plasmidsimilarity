@@ -53,7 +53,7 @@ rule count:
     log:
         "logs/count/{sample}_log.txt"
     shell:
-         "python ./plasmidsimilarity.py count -i {input} -o {params.name} -k {params.kmersize} 2> {log}"
+         "python ./plasmidsimilarity.py count -i {input} -o {params.name} -k {params.kmersize} -c 2> {log}"
 
 rule cluster:
     input:
