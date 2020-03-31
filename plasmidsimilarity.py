@@ -118,7 +118,7 @@ def main(command_line = None):
         mygraph.graph_to_plasmids(args.output_file, args.lower_limit, args.upper_limit)
 
     elif args.mode == "snakemake":
-        snakemake_in(samples = args.input_files, kmersize = args.cores )
+        snakemake_in(samples = args.input_files, kmersize = args.kmersize)
         os.chdir(f"{locationrepo}")
         os.system(f"snakemake --cores {args.cores} --use-conda")
 
