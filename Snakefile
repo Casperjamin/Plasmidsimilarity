@@ -32,7 +32,7 @@ rule all:
 
 rule merge:
     input:
-        expand("results/samples/{sample}/{sample}_31.hdf", sample = SAMPLES)
+        expand("results/samples/{sample}/{sample}.hdf", sample = SAMPLES)
     output:
         "results/all/merged.hdf"
     log:
@@ -46,10 +46,10 @@ rule count:
     input:
          lambda wildcards: SAMPLES[wildcards.sample]
     output:
-          "results/samples/{sample}/{sample}_31.hdf"
+          "results/samples/{sample}/{sample}.hdf"
     params:
         name = "results/samples/{sample}/{sample}",
-        kmersize = 31
+        kmersize = config['parameters']['KMERSIZE']
     log:
         "logs/count/{sample}_log.txt"
     shell:

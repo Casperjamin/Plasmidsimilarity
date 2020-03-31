@@ -54,7 +54,7 @@ def generate_output(kmer_dataframe, output_file, kmersize):
     """
     kmer_dataframe.columns = [output_file.split("/")[-1]]
     kmer_dataframe = kmer_dataframe.T
-    kmer_dataframe.to_hdf(f"{output_file}_{kmersize}.hdf", key = 'df', format = 'fixed')
+    kmer_dataframe.to_hdf(f"{output_file}.hdf", key = 'df', format = 'fixed')
 
 
 def overlapper(sequence,kmersize):
