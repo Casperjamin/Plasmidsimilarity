@@ -25,7 +25,8 @@ def file_name_generator(filepath):
 
 def snakemake_in(samples, kmersize):
     samplesdic = {}
-    samplesdic["KMERSIZE"] = kmersize
+    samplesdic['parameters'] = {}
+    samplesdic['parameters']["KMERSIZE"] = kmersize
     samplesdic["SAMPLES"] = {}
     for i in samples:
         samplename = file_name_generator(i)
