@@ -12,11 +12,10 @@ from scripts.plasmidread import kmercount
 
 def obtain_repoloc():
     return os.path.dirname(os.path.abspath(__file__))
+locationrepo = obtain_repoloc()
 
 def get_absolute_path(path):
     return os.path.abspath(path)
-
-locationrepo = obtain_repoloc()
 
 
 def file_name_generator(filepath):
@@ -24,8 +23,10 @@ def file_name_generator(filepath):
 
 
 
-def snakemake_in(samples):
-    samplesdic = {"SAMPLES":{}}
+def snakemake_in(samples, kmersize):
+    samplesdic = {}
+    samplesdic["KMERSIZE"] = kmersize
+    samplesdic["SAMPLES"] = {}
     for i in samples:
         samplename = file_name_generator(i)
         samplesdic["SAMPLES"][samplename] = get_absolute_path(i)
@@ -50,6 +51,7 @@ def main(command_line = None):
     snakemake = subparsers.add_parser("snakemake", help = "run fill pipeline from fasta to merged and clustering")
     snakemake.add_argument("-i", required = True, dest = "input_files", nargs = "+")
     snakemake.add_argument("--cores", dest = 'cores', required = True, type = int, help = 'Number of CPU cores to use')
+    snakemake.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
 
     #add subparser for extracting plasmidlike elements from assembly graph
     extract = subparsers.add_parser("extract", help = "take a GFA file and output different fasta files containing binned plasmid contigs. This is based on the connectivity in the assembly graph")
@@ -116,7 +118,7 @@ def main(command_line = None):
         mygraph.graph_to_plasmids(args.output_file, args.lower_limit, args.upper_limit)
 
     elif args.mode == "snakemake":
-        snakemake_in(args.input_files)
+        snakemake_in(samples = args.input_files, kmersize = args.cores )
         os.chdir(f"{locationrepo}")
         os.system(f"snakemake --cores {args.cores} --use-conda")
 
