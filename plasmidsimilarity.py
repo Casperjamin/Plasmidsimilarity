@@ -22,10 +22,11 @@ def file_name_generator(filepath):
 
 
 
-def snakemake_in(samples, kmersize):
+def snakemake_in(samples, kmersize, outdir):
     samplesdic = {}
     samplesdic['parameters'] = {}
     samplesdic['parameters']["KMERSIZE"] = kmersize
+    samplesdic['parameters']["outdir"] = outdir
     samplesdic["SAMPLES"] = {}
     for i in samples:
         samplename = file_name_generator(i)
@@ -52,6 +53,8 @@ def main(command_line = None):
     snakemake.add_argument("-i", required = True, dest = "input_files", nargs = "+")
     snakemake.add_argument("--cores", dest = 'cores', required = True, type = int, help = 'Number of CPU cores to use')
     snakemake.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
+    snakemake,add_argument("-o", required = True, dest = "outdir", nargs = 1)
+
 
     #add subparser for extracting plasmidlike elements from assembly graph
     extract = subparsers.add_parser("extract", help = "take a GFA file and output different fasta files containing binned plasmid contigs. This is based on the connectivity in the assembly graph")
@@ -118,7 +121,7 @@ def main(command_line = None):
         mygraph.graph_to_plasmids(args.output_file, args.lower_limit, args.upper_limit)
 
     elif args.mode == "snakemake":
-        snakemake_in(samples = args.input_files, kmersize = args.kmersize)
+        snakemake_in(samples = args.input_files, kmersize = args.kmersize, outdir = args.outdir)
         os.chdir(f"{locationrepo}")
         os.system(f"snakemake --cores {args.cores} --use-conda")
 
