@@ -4,6 +4,7 @@ import os
 configfile: "config/config.yaml"
 SAMPLES = config['SAMPLES']
 
+OUTDIR = str(config['parameters']['outdir']
 
 onstart:
     print("This is PlasmidSimilarity:")
@@ -16,7 +17,7 @@ onstart:
     for i in SAMPLES.items():
         print(i[0], '\t', i[1])
 
-    time.sleep(5)
+    time.sleep(3)
 
 
 
@@ -46,7 +47,7 @@ rule count:
     input:
          lambda wildcards: SAMPLES[wildcards.sample]
     output:
-          "results/samples/{sample}/{sample}.hdf"
+          temp("results/samples/{sample}/{sample}.hdf")
     params:
         name = "results/samples/{sample}/{sample}",
         kmersize = config['parameters']['KMERSIZE']
