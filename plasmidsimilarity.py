@@ -53,7 +53,7 @@ def main(command_line = None):
     snakemake.add_argument("-i", required = True, dest = "input_files", nargs = "+")
     snakemake.add_argument("--cores", dest = 'cores', required = True, type = int, help = 'Number of CPU cores to use')
     snakemake.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
-    snakemake,add_argument("-o", required = True, dest = "outdir", nargs = 1)
+    snakemake.add_argument("-o", required = True, dest = "outdir", nargs = 1)
 
 
     #add subparser for extracting plasmidlike elements from assembly graph
