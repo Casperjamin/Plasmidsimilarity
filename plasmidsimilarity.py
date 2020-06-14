@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+
 from argparse import ArgumentParser
 import yaml
 import os
@@ -8,30 +9,28 @@ from scripts import graphextract
 from scripts.plasmidmerge import merger
 from scripts.plasmidread import kmercount
 
-
-def obtain_repoloc():
-    return os.path.dirname(os.path.abspath(__file__))
-locationrepo = obtain_repoloc()
+locationrepo = os.path.dirname(os.path.abspath(__file__)) 
 
 def get_absolute_path(path):
     return os.path.abspath(path)
 
-
 def file_name_generator(filepath):
     return os.path.splitext(os.path.basename(filepath))[0]
-
-
 
 def snakemake_in(samples, kmersize, outdir):
     samplesdic = {}
     samplesdic['parameters'] = {}
     samplesdic['parameters']["KMERSIZE"] = kmersize
-    samplesdic['parameters']["outdir"] = outdir
+    samplesdic['parameters']["outdir"] = get_absolute_path(outdir)
     samplesdic["SAMPLES"] = {}
+    
+    # generate the samples dictionary as input for snakemake 
     for i in samples:
         samplename = file_name_generator(i)
         samplesdic["SAMPLES"][samplename] = get_absolute_path(i)
     data = yaml.dump(samplesdic, default_flow_style=False)
+    
+    # make and write config file location
     os.system(f"mkdir -p {locationrepo}/config")
     with open(f"{locationrepo}/config/config.yaml", 'w') as f:
         f.write(data)
