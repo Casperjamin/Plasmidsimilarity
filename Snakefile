@@ -4,7 +4,9 @@ import os
 configfile: "config/config.yaml"
 SAMPLES = config['SAMPLES']
 
-OUTDIR = str(config['parameters']['outdir']
+OUTDIR = str(config['parameters']['outdir'][0]) + "/"
+
+
 
 onstart:
     print("This is PlasmidSimilarity:")
@@ -16,16 +18,16 @@ onstart:
     print("Will generate plasmid (dis)similarities for the following files:")
     for i in SAMPLES.items():
         print(i[0], '\t', i[1])
-
+    print(f'output directory is: {OUTDIR}')
     time.sleep(3)
 
 
 
 rule all:
     input:
-        "results/all/merged.hdf",
-        "results/all/abricate_results.tsv",
-        "results/all/report/heatmap_AMR_ori.png"
+       OUTDIR + "merged.hdf",
+       OUTDIR + "abricate_results.tsv",
+       OUTDIR + "heatmap_AMR_ori.png"
 
 #################################
 # kmer counting and merging and cluster
@@ -33,13 +35,13 @@ rule all:
 
 rule merge:
     input:
-        expand("results/samples/{sample}/{sample}.hdf", sample = SAMPLES)
+        expand(OUTDIR + "samples/{sample}/{sample}.hdf", sample = SAMPLES)
     output:
-        "results/all/merged.hdf"
+        OUTDIR + "merged.hdf"
     log:
         "logs/merge/merge.txt"
     params:
-        name = "results/all/merged"
+        name = OUTDIR + "merged"
     shell:
         "python ./plasmidsimilarity.py merge -i {input} -o {params.name}"
 
@@ -47,9 +49,9 @@ rule count:
     input:
          lambda wildcards: SAMPLES[wildcards.sample]
     output:
-          temp("results/samples/{sample}/{sample}.hdf")
+          temp(OUTDIR + "samples/{sample}/{sample}.hdf")
     params:
-        name = "results/samples/{sample}/{sample}",
+        name = OUTDIR + "samples/{sample}/{sample}",
         kmersize = config['parameters']['KMERSIZE']
     log:
         "logs/count/{sample}_log.txt"
@@ -58,12 +60,12 @@ rule count:
 
 rule cluster:
     input:
-        "results/all/merged.hdf"
+        OUTDIR + "merged.hdf"
     output:
-        "results/all/report/tree.png",
-        "results/all/report/leaforder.txt"
+        OUTDIR + "tree.png",
+        OUTDIR + "leaforder.txt"
     params:
-        "results/all/report"
+        OUTDIR  
     shell:
         "python ./plasmidsimilarity.py cluster -i {input} -o {params}"
 
@@ -75,7 +77,7 @@ rule abricate:
     input:
         lambda wildcards: SAMPLES[wildcards.sample]
     output:
-        "results/samples/{sample}/{sample}_resistance.tsv"
+        OUTDIR + "samples/{sample}/{sample}_resistance.tsv"
     log:
        "logs/abricate/{sample}_resistance.txt"
     shell:
@@ -85,7 +87,7 @@ rule plasmid_abricate:
     input:
          lambda wildcards: SAMPLES[wildcards.sample]
     output:
-        "results/samples/{sample}/{sample}_plasmids.tsv"
+        OUTDIR + "samples/{sample}/{sample}_plasmids.tsv"
     log:
        "logs/abricate/{sample}_plasmids.txt"
     shell:
@@ -96,20 +98,20 @@ rule summarize_abricate:
         covcutoff = 60,
         idcutoff = 90
     input:
-        resistance = expand("results/samples/{sample}/{sample}_resistance.tsv", sample = SAMPLES),
-        plasmids = expand("results/samples/{sample}/{sample}_plasmids.tsv", sample = SAMPLES)
+        resistance = expand(OUTDIR + "samples/{sample}/{sample}_resistance.tsv", sample = SAMPLES),
+        plasmids = expand(OUTDIR+ "samples/{sample}/{sample}_plasmids.tsv", sample = SAMPLES)
     output:
-        "results/all/abricate_results.tsv"
+        OUTDIR + "abricate_results.tsv"
     run:
         data = [abricate_summary.AbricateSample(x).clean for x in input]
-        df = abricate_summary.AbricateSummary(data).dataframe(covcutoff= params.covcutoff, idcutoff = params.idcutoff)
+        df = abricate_summary.AbricateSummary(data).dataframe(covcutoff = params.covcutoff, idcutoff = params.idcutoff)
         df.to_csv(f"{output}", sep = "\t")
 
 rule heatmap_abricate:
     input:
-        heatmap = "results/all/abricate_results.tsv",
-        leaforder = "results/all/report/leaforder.txt"
+        heatmap = OUTDIR + "abricate_results.tsv",
+        leaforder = OUTDIR +"leaforder.txt"
     output:
-        "results/all/report/heatmap_AMR_ori.png"
+        OUTDIR + "heatmap_AMR_ori.png"
     run:
         heatmap.generate_heatmap(str(input.heatmap), str(input.leaforder), str(output))
