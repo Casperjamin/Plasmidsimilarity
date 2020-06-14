@@ -4,9 +4,7 @@ import os
 configfile: "config/config.yaml"
 SAMPLES = config['SAMPLES']
 
-OUTDIR = str(config['parameters']['outdir'][0]) + "/"
-
-
+OUTDIR = config['parameters']['outdir'] + "/"
 
 onstart:
     print("This is PlasmidSimilarity:")

@@ -52,7 +52,7 @@ def main(command_line = None):
     snakemake.add_argument("-i", required = True, dest = "input_files", nargs = "+")
     snakemake.add_argument("--cores", dest = 'cores', required = True, type = int, help = 'Number of CPU cores to use')
     snakemake.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
-    snakemake.add_argument("-o", required = True, dest = "outdir", nargs = 1)
+    snakemake.add_argument("-o", required = True, dest = "outdir")
 
 
     #add subparser for extracting plasmidlike elements from assembly graph
@@ -68,7 +68,7 @@ def main(command_line = None):
     count.add_argument("-i", required = True, dest ="input_file")
     count.add_argument("-o", required = True, dest = "output_file")
     count.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
-    count.add_argument("-c", required = False, dest = "circular", action = 'store_true', default = False, help = 'if marked, sequences are considered circular and therefore the part of the sequence going from the end to the beginning of the contig will be used for kmer counting')
+    count.add_argument("-c", required = False, dest = "circular", action = 'store_true', default = True, help = 'if marked, sequences are considered circular and therefore the part of the sequence going from the end to the beginning of the contig will be used for kmer counting')
 
 
     #add subparser to merges the kmer counts
