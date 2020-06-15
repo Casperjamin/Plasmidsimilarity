@@ -41,7 +41,7 @@ warning: this does however also extract all contamination, or mis-assemblies. it
 ## To do:   
 * write complete manual
 * version numbering
-* come up with a suitable way to handle output directory with Snakemake
+
 
 
 
