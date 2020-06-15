@@ -1,6 +1,9 @@
 from scripts import abricate_summary, heatmap
 import time
 import os
+from shutil import copy2
+import pathlib
+
 configfile: "config/config.yaml"
 SAMPLES = config['SAMPLES']
 
@@ -13,12 +16,16 @@ databases = {
 		'virulence':'vfdb'
 		}
 
-print(databases)
 
 onstart:
     print("This is PlasmidSimilarity:")
     os.system("cat logo.txt")
     time.sleep(1)
+
+    # copy the config file to output dir
+    pathlib.Path(OUTDIR).mkdir(parents=True, exist_ok=True)
+    copy2('config/config.yaml', OUTDIR )
+
     print('Checking number of input files...\n')
     if len(SAMPLES) < 2:
         raise Exception(f'Not enough input files given. \n')
