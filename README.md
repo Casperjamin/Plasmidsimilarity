@@ -17,10 +17,13 @@ actual cloning and usage:
 ```
 git clone https://github.com/casperjamin/plasmidsimilarity.git
 cd plasmidsimilarity
-python ./plasmidsimilarity.py snakemake -i plasmidseq1.fasta plasmidseq2.fasta plasmidseq2 otherplasmidseq*fasta
+python ./plasmidsimilarity.py snakemake \
+-i plasmidseq1.fasta plasmidseq2.fasta plasmidseq2.fasta otherplasmidseq*fasta \
+--cores 1 \
+-o myoutdir
 ```
 
-results will be shown in the results folder within this repo/directory
+results will be shown in 'myoutdir' 
 
 ## Extracting plasmid-like sequences from asssembly graphs (in gfa format)
 
@@ -38,7 +41,7 @@ warning: this does however also extract all contamination, or mis-assemblies. it
 ## To do:   
 * write complete manual
 * version numbering
-* come up with a suitable way to handle output directory with Snakemake
+
 
 
 
