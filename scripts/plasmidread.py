@@ -109,7 +109,7 @@ def kmercount(input_file, output_file, kmersize = 31, circular = True, write = T
 
 
     # added this if write block to reuse this code for the uniqueness module
-    if write = True:
+    if write == True:
         print(f"done counting kmers of {input_file}\t ")
         generate_output(df, output_file = output_file, kmersize = kmersize)
 
