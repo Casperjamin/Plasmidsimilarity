@@ -17,7 +17,10 @@ actual cloning and usage:
 ```
 git clone https://github.com/casperjamin/plasmidsimilarity.git
 cd plasmidsimilarity
-python ./plasmidsimilarity.py snakemake -i plasmidseq1.fasta plasmidseq2.fasta plasmidseq2 otherplasmidseq*fasta
+python ./plasmidsimilarity.py snakemake \
+-i plasmidseq1.fasta plasmidseq2.fasta plasmidseq2.fasta otherplasmidseq*fasta \
+--cores 1 \
+-o myoutdir
 ```
 
 results will be shown in the results folder within this repo/directory
