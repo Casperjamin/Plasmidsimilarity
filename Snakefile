@@ -6,6 +6,15 @@ SAMPLES = config['SAMPLES']
 
 OUTDIR = config['parameters']['outdir'] + "/"
 
+
+databases = {
+		'resistance':'NCBI',
+		'plasmids':'plasmidfinder',
+		'virulence':'vfdb'
+		}
+
+print(databases)
+
 onstart:
     print("This is PlasmidSimilarity:")
     os.system("cat logo.txt")
@@ -63,7 +72,7 @@ rule cluster:
         OUTDIR + "tree.png",
         OUTDIR + "leaforder.txt"
     params:
-        OUTDIR  
+        OUTDIR
     shell:
         "python ./plasmidsimilarity.py cluster -i {input} -o {params}"
 
@@ -73,31 +82,22 @@ rule cluster:
 #################################
 rule abricate:
     input:
-        lambda wildcards: SAMPLES[wildcards.sample]
+        sample = lambda wildcards: SAMPLES[wildcards.sample],
     output:
-        OUTDIR + "samples/{sample}/{sample}_resistance.tsv"
+        OUTDIR + "samples/{sample}/{sample}_{database}.tsv"
     log:
-       OUTDIR + "logs/abricate/{sample}_resistance.txt"
+       OUTDIR + "logs/abricate/{sample}_{database}.txt"
+    params:
+	    database = lambda wildcards: databases[wildcards.database]
     shell:
-        "abricate {input} > {output} 2> {log}"
-
-rule plasmid_abricate:
-    input:
-         lambda wildcards: SAMPLES[wildcards.sample]
-    output:
-        OUTDIR + "samples/{sample}/{sample}_plasmids.tsv"
-    log:
-       OUTDIR + "logs/abricate/{sample}_plasmids.txt"
-    shell:
-        "abricate --db plasmidfinder {input} > {output} 2> {log}"
+        "abricate --db {params.database} {input.sample} > {output} 2> {log}"
 
 rule summarize_abricate:
     params:
         covcutoff = 60,
         idcutoff = 90
     input:
-        resistance = expand(OUTDIR + "samples/{sample}/{sample}_resistance.tsv", sample = SAMPLES),
-        plasmids = expand(OUTDIR+ "samples/{sample}/{sample}_plasmids.tsv", sample = SAMPLES)
+         expand(OUTDIR + "samples/{sample}/{sample}_{database}.tsv", sample = SAMPLES, database = databases)
     output:
         OUTDIR + "abricate_results.tsv"
     run:
