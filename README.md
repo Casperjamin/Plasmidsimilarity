@@ -23,7 +23,7 @@ python ./plasmidsimilarity.py snakemake \
 -o myoutdir
 ```
 
-results will be shown in the results folder within this repo/directory
+results will be shown in 'myoutdir' 
 
 ## Extracting plasmid-like sequences from asssembly graphs (in gfa format)
 
