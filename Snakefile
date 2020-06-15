@@ -37,11 +37,11 @@ rule merge:
     output:
         OUTDIR + "merged.hdf"
     log:
-        "logs/merge/merge.txt"
+        OUTDIR + "logs/merge/merge.txt"
     params:
         name = OUTDIR + "merged"
     shell:
-        "python ./plasmidsimilarity.py merge -i {input} -o {params.name}"
+        "python ./plasmidsimilarity.py merge -i {input} -o {params.name} 2> {log}"
 
 rule count:
     input:
@@ -52,7 +52,7 @@ rule count:
         name = OUTDIR + "samples/{sample}/{sample}",
         kmersize = config['parameters']['KMERSIZE']
     log:
-        "logs/count/{sample}_log.txt"
+        OUTDIR + "logs/count/{sample}_log.txt"
     shell:
          "python ./plasmidsimilarity.py count -i {input} -o {params.name} -k {params.kmersize} -c 2> {log}"
 
@@ -77,9 +77,9 @@ rule abricate:
     output:
         OUTDIR + "samples/{sample}/{sample}_resistance.tsv"
     log:
-       "logs/abricate/{sample}_resistance.txt"
+       OUTDIR + "logs/abricate/{sample}_resistance.txt"
     shell:
-        "abricate {input} > {output}"
+        "abricate {input} > {output} 2> {log}"
 
 rule plasmid_abricate:
     input:
@@ -87,9 +87,9 @@ rule plasmid_abricate:
     output:
         OUTDIR + "samples/{sample}/{sample}_plasmids.tsv"
     log:
-       "logs/abricate/{sample}_plasmids.txt"
+       OUTDIR + "logs/abricate/{sample}_plasmids.txt"
     shell:
-        "abricate --db plasmidfinder {input} > {output}"
+        "abricate --db plasmidfinder {input} > {output} 2> {log}"
 
 rule summarize_abricate:
     params:
