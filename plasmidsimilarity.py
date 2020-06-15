@@ -8,6 +8,9 @@ from scripts import plasmidplots
 from scripts import graphextract
 from scripts.plasmidmerge import merger
 from scripts.plasmidread import kmercount
+from scripts.unique import unique
+
+
 from scripts.checkpythonversion import check_right_version
 
 check_right_version()
@@ -112,6 +115,8 @@ def main(command_line = None):
         circular = args.circular
         )
 
+    elif args.mode == "unique":
+        unique(input = args,input_file, output = args.output_file, lower = args.lower_limit, upper = args.upper_limit)         
 
     elif args.mode == "merge":
         merger(args.input_files, args.output_file)
