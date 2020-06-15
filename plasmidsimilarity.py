@@ -53,7 +53,7 @@ def main(command_line = None):
     subparsers = parser.add_subparsers(dest = "mode")
     
     # add module to determine uniqueness of each k-mer
-    unique = subparser.add_parser("unique", help = 'determine the fraction of unique k-mers over a range of k-mers')
+    unique = subparsers.add_parser("unique", help = 'determine the fraction of unique k-mers over a range of k-mers')
     unique.add_argument("-i", required = True, dest = 'input_file')
     unique.add_argument("-o", required = True, dest = 'output_file')
     unique.add_argument("-u", required = False, dest = 'upper_limit', default = 51, help = 'upper limit of the size of k-mers to analyse')   
@@ -116,7 +116,7 @@ def main(command_line = None):
         )
 
     elif args.mode == "unique":
-        unique(input = args,input_file, output = args.output_file, lower = args.lower_limit, upper = args.upper_limit)         
+        unique(input = args.input_file, output = args.output_file, lower = args.lower_limit, upper = args.upper_limit)         
 
     elif args.mode == "merge":
         merger(args.input_files, args.output_file)
