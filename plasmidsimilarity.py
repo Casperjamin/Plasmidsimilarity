@@ -8,6 +8,9 @@ from scripts import plasmidplots
 from scripts import graphextract
 from scripts.plasmidmerge import merger
 from scripts.plasmidread import kmercount
+from scripts.checkpythonversion import check_right_version
+
+check_right_version()
 
 locationrepo = os.path.dirname(os.path.abspath(__file__)) 
 
@@ -45,7 +48,14 @@ def main(command_line = None):
 
     #add sub parser object
     subparsers = parser.add_subparsers(dest = "mode")
-
+    
+    # add module to determine uniqueness of each k-mer
+    unique = subparser.add_parser("unique", help = 'determine the fraction of unique k-mers over a range of k-mers')
+    unique.add_argument("-i", required = True, dest = 'input_file')
+    unique.add_argument("-o", required = True, dest = 'output_file')
+    unique.add_argument("-u", required = False, dest = 'upper_limit', default = 51, help = 'upper limit of the size of k-mers to analyse')   
+    unique.add_argument("-l", required = False, dest = 'lower_limit', default = 7, help = 'lower limit of the size of k-mers to analyse')
+ 
 
     #add snakemake pipeline to completely run fasta to clustered output
     snakemake = subparsers.add_parser("snakemake", help = "run fill pipeline from fasta to merged and clustering")
