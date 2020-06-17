@@ -58,7 +58,7 @@ def main(command_line = None):
     unique.add_argument("-o", required = True, dest = 'output_file')
     unique.add_argument("-u", required = False, dest = 'upper_limit', type = int,  default = 51, help = 'upper limit of the size of k-mers to analyse')   
     unique.add_argument("-l", required = False, dest = 'lower_limit', type = int, default = 7, help = 'lower limit of the size of k-mers to analyse')
- 
+    unique.add_argument("--cores", dest = 'cores', required = False, type = int, default = 1,  help = 'Number of CPU cores to use')
 
     #add snakemake pipeline to completely run fasta to clustered output
     snakemake = subparsers.add_parser("snakemake", help = "run full pipeline from fasta to merged and clustering")
@@ -116,7 +116,7 @@ def main(command_line = None):
         )
 
     elif args.mode == "unique":
-        uniq(input_file = args.input_file, output = args.output_file, lower = args.lower_limit, upper = args.upper_limit)         
+        uniq(input_file = args.input_file, output = args.output_file, lower = args.lower_limit, upper = args.upper_limit, numcores = args.cores)         
 
     elif args.mode == "merge":
         merger(args.input_files, args.output_file)
