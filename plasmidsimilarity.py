@@ -61,7 +61,7 @@ def main(command_line = None):
  
 
     #add snakemake pipeline to completely run fasta to clustered output
-    snakemake = subparsers.add_parser("snakemake", help = "run fill pipeline from fasta to merged and clustering")
+    snakemake = subparsers.add_parser("snakemake", help = "run full pipeline from fasta to merged and clustering")
     snakemake.add_argument("-i", required = True, dest = "input_files", nargs = "+")
     snakemake.add_argument("--cores", dest = 'cores', required = True, type = int, help = 'Number of CPU cores to use')
     snakemake.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
@@ -116,7 +116,7 @@ def main(command_line = None):
         )
 
     elif args.mode == "unique":
-        unique(input = args.input_file, output = args.output_file, lower = args.lower_limit, upper = args.upper_limit)         
+        unique(input_file = args.input_file, output = args.output_file, lower = args.lower_limit, upper = args.upper_limit)         
 
     elif args.mode == "merge":
         merger(args.input_files, args.output_file)
@@ -141,9 +141,6 @@ def main(command_line = None):
 
     else:
         parser.print_usage()
-
-
-
 
 if __name__ == "__main__":
     main()
