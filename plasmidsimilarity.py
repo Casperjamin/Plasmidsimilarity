@@ -8,7 +8,7 @@ from scripts import plasmidplots
 from scripts import graphextract
 from scripts.plasmidmerge import merger
 from scripts.plasmidread import kmercount
-from scripts.unique import unique
+from scripts.unique import unique as uniq
 
 
 from scripts.checkpythonversion import check_right_version
@@ -56,8 +56,8 @@ def main(command_line = None):
     unique = subparsers.add_parser("unique", help = 'determine the fraction of unique k-mers over a range of k-mers')
     unique.add_argument("-i", required = True, dest = 'input_file')
     unique.add_argument("-o", required = True, dest = 'output_file')
-    unique.add_argument("-u", required = False, dest = 'upper_limit', default = 51, help = 'upper limit of the size of k-mers to analyse')   
-    unique.add_argument("-l", required = False, dest = 'lower_limit', default = 7, help = 'lower limit of the size of k-mers to analyse')
+    unique.add_argument("-u", required = False, dest = 'upper_limit', type = int,  default = 51, help = 'upper limit of the size of k-mers to analyse')   
+    unique.add_argument("-l", required = False, dest = 'lower_limit', type = int, default = 7, help = 'lower limit of the size of k-mers to analyse')
  
 
     #add snakemake pipeline to completely run fasta to clustered output
@@ -116,7 +116,7 @@ def main(command_line = None):
         )
 
     elif args.mode == "unique":
-        unique(input_file = args.input_file, output = args.output_file, lower = args.lower_limit, upper = args.upper_limit)         
+        uniq(input_file = args.input_file, output = args.output_file, lower = args.lower_limit, upper = args.upper_limit)         
 
     elif args.mode == "merge":
         merger(args.input_files, args.output_file)
