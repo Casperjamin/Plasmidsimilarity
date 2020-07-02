@@ -10,6 +10,13 @@ def reversecomp(inputseq):
         "C":"G",
         "G":"C",
         "T":"A",
+        "M":"K",
+        "K":"M",
+        "B":"V",
+        "V":"B",
+        "H":"D",
+        "Y":"R",
+        "R":"Y",
         "N":"N"}
 
     seq = inputseq[::-1]

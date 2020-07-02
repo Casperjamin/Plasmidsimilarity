@@ -6,6 +6,16 @@ setuptools.setup(
     author_email="casperjamin@gmail.com",                                       
     description="Clustering plasmids based on their k-mer content",            
     url="https://github.com/casperjamin/plasmidsimilarity",                     
-    install_requires=['numpy', 'biopython','pandas', 'networkx','pytables', 'scipy', 'matplotlib', 'seaborn'],
+    install_requires=[
+        'snakemake',
+        'numpy',
+        'PyYAML', 
+        'biopython',
+        'pandas',
+        'networkx',
+        'tables',
+        'scipy', 
+        'matplotlib' ,
+        'seaborn'],
     python_requires='>=3.6'                                                     
     )        
