@@ -11,7 +11,7 @@ OUTDIR = config['parameters']['outdir'] + "/"
 
 
 databases = {
-		'resistance':'NCBI',
+		'resistance':'ncbi',
 		'plasmids':'plasmidfinder',
 		'virulence':'vfdb'
 		}
