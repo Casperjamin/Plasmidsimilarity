@@ -23,7 +23,7 @@ def get_absolute_path(path):
 def file_name_generator(filepath):
     return os.path.splitext(os.path.basename(filepath))[0]
 
-def snakemake_in(samples, kmersize, outdir):
+def snakemake_in(samples, kmersize, outdir, minid, mincov):
     samplesdic = {}
     samplesdic['parameters'] = {}
     samplesdic['parameters']["KMERSIZE"] = kmersize
@@ -117,13 +117,24 @@ def main(command_line = None):
         )
 
     elif args.mode == "unique":
-        uniq(input_file = args.input_file, lower = args.lower_limit, upper = args.upper_limit, numcores = args.cores)         
+        uniq(
+                input_file = args.input_file,
+                lower = args.lower_limit,
+                upper = args.upper_limit,
+                numcores = args.cores
+                )         
 
     elif args.mode == "merge":
-        merger(args.input_files, args.output_file)
+        merger(
+                args.input_files,
+                args.output_file
+                )
 
     elif args.mode == "cluster":
-        plasmidplots.cluster(args.input_file, args.output_file)
+        plasmidplots.cluster(
+                args.input_file,
+                args.output_file
+                )
 
     elif args.mode == "convert":
         print("Converting GFA file to FASTA")
@@ -133,7 +144,11 @@ def main(command_line = None):
     elif args.mode == "extract":
         print("extracting plasmid contigs and output them in separate bins")
         mygraph = graphextract.assemblygraph(args.input_file)
-        mygraph.graph_to_plasmids(args.output_file, args.lower_limit, args.upper_limit)
+        mygraph.graph_to_plasmids(
+                args.output_file,
+                args.lower_limit,
+                args.upper_limit
+                )
 
     elif args.mode == "snakemake":
         snakemake_in(
