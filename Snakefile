@@ -98,14 +98,16 @@ rule abricate:
     log:
        OUTDIR + "logs/abricate/{sample}_{database}.txt"
     params:
-	    database = lambda wildcards: databases[wildcards.database]
+        database = lambda wildcards: databases[wildcards.database],
+        minid = config['parameters']['minid'],
+        mincov = config['parameters']['minid']
     shell:
-        "abricate --db {params.database} {input.sample} > {output} 2> {log}"
+        "abricate --db {params.database} --mincov {params.mincov} --minid {params.minid} {input.sample} > {output} 2> {log}"
 
 rule summarize_abricate:
     params:
-        covcutoff = 60,
-        idcutoff = 90
+        covcutoff = config['parameters']['mincov'],
+        idcutoff = config['parameters']['mincov'] 
     input:
          expand(OUTDIR + "samples/{sample}/{sample}_{database}.tsv", sample = SAMPLES, database = databases)
     output:
