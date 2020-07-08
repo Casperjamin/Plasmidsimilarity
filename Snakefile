@@ -1,4 +1,4 @@
-from scripts import abricate_summary, heatmap
+from scripts import abricate_summary, heatmap, combinedplot
 import time
 import os
 from shutil import copy2
@@ -44,7 +44,8 @@ rule all:
     input:
        OUTDIR + "merged.hdf",
        OUTDIR + "abricate_results.tsv",
-       OUTDIR + "heatmap_AMR_ori.png"
+       OUTDIR + "heatmap_AMR_ori.png",
+       OUTDIR + "compositeplot.png"
 
 #################################
 # kmer counting and merging and cluster
@@ -80,7 +81,9 @@ rule cluster:
         OUTDIR + "merged.hdf"
     output:
         OUTDIR + "tree.png",
-        OUTDIR + "leaforder.txt"
+        OUTDIR + "leaforder.txt",
+        OUTDIR + "distances_molten.tsv",
+        OUTDIR + "distances_matrix.tsv"
     params:
         OUTDIR
     shell:
@@ -125,3 +128,16 @@ rule heatmap_abricate:
         OUTDIR + "heatmap_AMR_ori.png"
     run:
         heatmap.generate_heatmap(str(input.heatmap), str(input.leaforder), str(output))
+
+###############################
+# composite plot
+###############################
+
+rule compositeplot:
+    input:
+        abricate = OUTDIR + "abricate_results.tsv",
+        distances = OUTDIR + "distances_matrix.tsv"
+    output:
+        OUTDIR + "compositeplot.png"
+    run:
+        combinedplot.generateplot(str(input.abricate), str(input.distances), str(output))

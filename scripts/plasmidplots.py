@@ -28,9 +28,10 @@ def plottree(output, cluster, labels):
 
 def generate_pairwise_distance(matrix, df, output):
     labeledmatrix = pd.DataFrame(squareform(matrix), index = df.index, columns = df.index)
+    labeledmatrix.to_csv(f"{output}/distances_matrix.tsv", sep = '\t')
     labeledmatrix = labeledmatrix.unstack().reset_index()
     labeledmatrix.columns = ['Sample 1', 'Sample 2', 'Jaccard dissimilarity']
-    labeledmatrix.to_csv(f"{output}/distances.tsv", sep = "\t")
+    labeledmatrix.to_csv(f"{output}/distances_molten.tsv", sep = "\t")
 
 
 def dataframe_to_clusters(input):
