@@ -33,6 +33,9 @@ onstart:
     for i in SAMPLES.items():
         print(i[0], '\t', i[1])
     print(f'output directory is: {OUTDIR}')
+    minid = config["parameters"]["minid"]
+    mincov = config["parameters"]["mincov"]
+    print(f'abricate cut-off are: \n sequence coverage {mincov}\n sequence identity {minid}')
     time.sleep(3)
 
 
