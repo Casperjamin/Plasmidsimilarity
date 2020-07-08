@@ -20,9 +20,16 @@ def read_leaf_order(leaforder):
             order.append(i.strip('\n'))
     return order
 
+
+def minsize(value, cutoff):
+    if value > cutoff:
+        return value
+    else:
+        return cutoff
+
 def make_heatmap(df, output):
-    width = len(df.T) * 0.6
-    height = len(df) * 0.4
+    width = minsize(len(df.T) * 0.6, 10)
+    height = minsize(len(df) * 0.4, 8)
     plt.figure(figsize = [width,height])
     plt.title('Heatmap of AMR genes and plasmid ORIs')
     sns.heatmap(df, cmap = "YlGnBu", linewidth = 0.5, linecolor = 'black')

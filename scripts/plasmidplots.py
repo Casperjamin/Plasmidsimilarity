@@ -5,7 +5,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
-
+from scripts.heatmap import minsize 
 
 
 def write_leaves_order(list_of_leaves, outdir):
@@ -16,7 +16,7 @@ def write_leaves_order(list_of_leaves, outdir):
 
 def plottree(output, cluster, labels):
     width = 10
-    height = len(labels) * 0.2
+    height = minsize(len(labels) * 0.2, 8)
     dn = plt.figure(figsize=[width, height])
     dn = dendrogram(cluster, orientation="right", labels=labels)
     list_of_leaves = labels[dn['leaves']]
