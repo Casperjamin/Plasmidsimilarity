@@ -60,15 +60,17 @@ def main(command_line = None):
     unique.add_argument("--cores", dest = 'cores', required = False, type = int, default = 1,  help = 'Number of CPU cores to use')
 
     #add snakemake pipeline to completely run fasta to clustered output
-    snakemake = subparsers.add_parser("snakemake", help = "run full pipeline from fasta to merged and clustering")
+    snakemake = subparsers.add_parser("snakemake", help = "run full pipeline from fasta to clustering and determining AMR, virulence and ORIs")
     snakemake.add_argument("-i", required = True, dest = "input_files", nargs = "+")
     snakemake.add_argument("--cores", dest = 'cores', required = True, type = int, help = 'Number of CPU cores to use')
     snakemake.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
+    snakemake.add_argument("--mincov", required = False, dest = "mincov", type = float, default = 60)
+    snakemake.add_argument("--minid", required = False, dest = "minid", type = float, default = 90)
     snakemake.add_argument("-o", required = True, dest = "outdir")
 
 
     #add subparser for extracting plasmidlike elements from assembly graph
-    extract = subparsers.add_parser("extract", help = "take a GFA file and output different fasta files containing binned plasmid contigs. This is based on the connectivity in the assembly graph")
+    extract = subparsers.add_parser("extract", help = "Takes a GFA file and output different fasta files containing binned plasmid contigs. This is based on the connectivity in the assembly graph")
     extract.add_argument("-i", required = True, dest = "input_file")
     extract.add_argument("-o", required = True, dest = "output_file")
     extract.add_argument("-u", required = False, dest = "upper_limit", default = 1000000, type = int)
@@ -76,7 +78,7 @@ def main(command_line = None):
 
 
     #add subparser that handles kmercounting
-    count = subparsers.add_parser("count", help = "Takes a fasta file and counts the occurences of kmers of specified length, it returns a pickled file containing a pandas dataframe where each fasta entry is a new row in the dataframe")
+    count = subparsers.add_parser("count", help = "Takes a fasta file and counts the occurences of kmers of specified length, it returns a hdf file containing a pandas dataframe where each fasta entry is a new row in the dataframe")
     count.add_argument("-i", required = True, dest ="input_file")
     count.add_argument("-o", required = True, dest = "output_file")
     count.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
@@ -134,7 +136,14 @@ def main(command_line = None):
         mygraph.graph_to_plasmids(args.output_file, args.lower_limit, args.upper_limit)
 
     elif args.mode == "snakemake":
-        snakemake_in(samples = args.input_files, kmersize = args.kmersize, outdir = args.outdir)
+        snakemake_in(
+                samples = args.input_files,
+                kmersize = args.kmersize,
+                outdir = args.outdir,
+                minid = args.minid,
+                mincov = args.mincov
+                )
+
         os.chdir(f"{locationrepo}")
         os.system(f"snakemake --cores {args.cores} --use-conda")
 
