@@ -28,6 +28,8 @@ def snakemake_in(samples, kmersize, outdir, minid, mincov):
     samplesdic['parameters'] = {}
     samplesdic['parameters']["KMERSIZE"] = kmersize
     samplesdic['parameters']["outdir"] = get_absolute_path(outdir)
+    samplesdic['parameters']['minid'] = minid
+    samplesdic['parameters']['mincov'] = mincov
     samplesdic["SAMPLES"] = {}
     
     # generate the samples dictionary as input for snakemake 
