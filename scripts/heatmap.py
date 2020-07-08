@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import seaborn as sns
 import sys
 import matplotlib.pyplot as plt
@@ -19,8 +21,8 @@ def read_leaf_order(leaforder):
     return order
 
 def make_heatmap(df, output):
-    width = len(df.T) * 0.3
-    height = len(df) * 0.2
+    width = len(df.T) * 0.6
+    height = len(df) * 0.4
     plt.figure(figsize = [width,height])
     plt.title('Heatmap of AMR genes and plasmid ORIs')
     sns.heatmap(df, cmap = "YlGnBu", linewidth = 0.5, linecolor = 'black')
