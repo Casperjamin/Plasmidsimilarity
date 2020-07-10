@@ -1,4 +1,4 @@
-from scripts import abricate_summary, heatmap, combinedplot
+from scripts import abricate_summary, heatmap, combinedplot, describe
 import time
 import os
 from shutil import copy2
@@ -45,7 +45,8 @@ rule all:
        OUTDIR + "merged.hdf",
        OUTDIR + "abricate_results.tsv",
        OUTDIR + "heatmap_AMR_ori.png",
-       OUTDIR + "compositeplot.png"
+       OUTDIR + "compositeplot.png",
+       OUTDIR + "description_plasmids.tsv"
 
 #################################
 # kmer counting and merging and cluster
@@ -141,3 +142,17 @@ rule compositeplot:
         OUTDIR + "compositeplot.png"
     run:
         combinedplot.generateplot(str(input.abricate), str(input.distances), str(output))
+
+
+
+################################
+# Description of plasmids
+################################
+
+rule describe:
+    input:
+        list(SAMPLES.values())
+    output:
+        OUTDIR + "description_plasmids.tsv"
+    run:
+        describe.DescriptionPlasmids(list(input), str(output))
