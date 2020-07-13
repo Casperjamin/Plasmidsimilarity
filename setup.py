@@ -1,7 +1,7 @@
 import setuptools                                                               
 setuptools.setup(                                                              
     name="Plasmidsimilarity",                                                   
-    version="0.4.0",
+    version="0.5.0",
     author="Casper Jamin",                                               
     author_email="casperjamin@gmail.com",                                       
     description="Clustering plasmids based on their k-mer content",            
