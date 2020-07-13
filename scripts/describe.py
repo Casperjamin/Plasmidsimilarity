@@ -3,7 +3,7 @@ import Bio.SeqIO as SeqIO
 
 def nucl_count(sequence):
     """determine counts of each letter in a sequence, return dictionary with counts"""
-    nucl = {'A':0,'G':0,'C':0,'G':0}
+    nucl = {'A':0,'G':0,'C':0,'G':0, 'N':0}
 
     for letter in sequence:
         if letter not in nucl:
@@ -30,12 +30,18 @@ class PlasmidDescribe:
             numBP += len(contig.seq)
             nucleotides.update(nucl_count(contig.seq.upper()))
 
-        GC = (nucleotides['C'] + nucleotides['G']) / numBP * 100        
 
         results = {
             "contigs":numcontigs,
             "basepairs":numBP,
-            "GC-content":GC,
+            'GC%':(nucleotides['C'] + nucleotides['G'] ) / numBP * 100,
+            "A nucl":nucleotides['A'],
+            "C nucl":nucleotides['C'],
+            "G nucl":nucleotides['G'],
+            "T nucl":nucleotides['T'],
+            "N nucl":nucleotides['N'],
+            "other nucleotides": numBP - sum([nucleotides[x] for x in ['A', 'C', 'G', 'T']])
+
             }
         return results
 
