@@ -104,7 +104,7 @@ rule abricate:
     params:
         database = lambda wildcards: databases[wildcards.database],
         minid = config['parameters']['minid'],
-        mincov = config['parameters']['minid']
+        mincov = config['parameters']['mincov']
     shell:
         "abricate --db {params.database} --mincov {params.mincov} --minid {params.minid} {input.sample} > {output} 2> {log}"
 
