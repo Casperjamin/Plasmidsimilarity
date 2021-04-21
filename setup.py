@@ -18,6 +18,6 @@ setuptools.setup(
         'scipy',
         'matplotlib' ,
         'seaborn'],
-    entry_points={"console_scripts": ['plasmidsimilarity = plasmidsimilarity.plasmidsimilarity:main']}
-    
+    entry_points={"console_scripts": ['plasmidsimilarity = plasmidsimilarity:main']}
+
     )
