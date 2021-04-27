@@ -1,4 +1,3 @@
-
 import networkx as nx
 
 class assemblygraph():
@@ -34,9 +33,6 @@ class assemblygraph():
                 with open(f"{outputloc}_plasmid_{count}.fasta", "w") as f:
                     for i in element:
                         f.write(f">{i}\n{self.contigs[str(i)]}\n")
-
-
-
 
 
 def graph_read(inputfile):
