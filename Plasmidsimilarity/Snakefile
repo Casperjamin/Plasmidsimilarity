@@ -1,4 +1,4 @@
-from scripts import abricate_summary, heatmap, combinedplot, describe
+from Plasmidsimilarity.scripts import abricate_summary, heatmap, combinedplot, describe
 import time
 import os
 from shutil import copy2
@@ -62,7 +62,7 @@ rule merge:
     params:
         name = OUTDIR + "merged"
     shell:
-        "python ./plasmidsimilarity.py merge -i {input} -o {params.name} 2> {log}"
+        "Plasmidsimilarity merge -i {input} -o {params.name} 2> {log}"
 
 rule count:
     input:
@@ -75,7 +75,7 @@ rule count:
     log:
         OUTDIR + "logs/count/{sample}_log.txt"
     shell:
-         "python ./plasmidsimilarity.py count -i {input} -o {params.name} -k {params.kmersize} -c 2> {log}"
+         "Plasmidsimilarity count -i {input} -o {params.name} -k {params.kmersize} -c 2> {log}"
 
 rule cluster:
     input:
@@ -88,7 +88,7 @@ rule cluster:
     params:
         OUTDIR
     shell:
-        "python ./plasmidsimilarity.py cluster -i {input} -o {params}"
+        "Plasmidsimilarity cluster -i {input} -o {params}"
 
 
 #################################
@@ -111,7 +111,7 @@ rule abricate:
 rule summarize_abricate:
     params:
         covcutoff = config['parameters']['mincov'],
-        idcutoff = config['parameters']['mincov'] 
+        idcutoff = config['parameters']['mincov']
     input:
          expand(OUTDIR + "samples/{sample}/{sample}_{database}.tsv", sample = SAMPLES, database = databases)
     output:

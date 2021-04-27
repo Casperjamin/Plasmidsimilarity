@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
-
+import argparse
+import sys
 from argparse import ArgumentParser
 import yaml
 import os
 
-from scripts import plasmidplots
-from scripts import graphextract
-from scripts.plasmidmerge import merger
-from scripts.plasmidread import kmercount
-from scripts.unique import unique as uniq
+from Plasmidsimilarity.scripts import plasmidplots
+from Plasmidsimilarity.scripts import graphextract
+from Plasmidsimilarity.scripts.plasmidmerge import merger
+from Plasmidsimilarity.scripts.plasmidread import kmercount
+from Plasmidsimilarity.scripts.unique import unique as uniq
 
 
-from scripts.checkpythonversion import check_right_version
+from Plasmidsimilarity.scripts.checkpythonversion import check_right_version
 
 check_right_version()
 
-locationrepo = os.path.dirname(os.path.abspath(__file__)) 
+locationrepo = os.path.dirname(os.path.abspath(__file__))
 
 def get_absolute_path(path):
     return os.path.abspath(path)
@@ -31,33 +32,32 @@ def snakemake_in(samples, kmersize, outdir, minid, mincov):
     samplesdic['parameters']['minid'] = minid
     samplesdic['parameters']['mincov'] = mincov
     samplesdic["SAMPLES"] = {}
-    
-    # generate the samples dictionary as input for snakemake 
+
+    # generate the samples dictionary as input for snakemake
     for i in samples:
         samplename = file_name_generator(i)
         samplesdic["SAMPLES"][samplename] = get_absolute_path(i)
     data = yaml.dump(samplesdic, default_flow_style=False)
-    
+
     # make and write config file location
     os.system(f"mkdir -p {locationrepo}/config")
     with open(f"{locationrepo}/config/config.yaml", 'w') as f:
         f.write(data)
 
-####################
-# Command line Parsers initialization
-####################
 
 def main(command_line = None):
+    """Console script for Plasmidsimilarity."""
     #add main parser object
+    print(locationrepo)
     parser = ArgumentParser(description = "Plasmidsimilarity toolkit...")
 
     #add sub parser object
     subparsers = parser.add_subparsers(dest = "mode")
-    
+
     # add module to determine uniqueness of each k-mer
     unique = subparsers.add_parser("unique", help = 'determine the fraction of unique k-mers over a range of k-mers, output is sent to stdout')
     unique.add_argument("-i", required = True, dest = 'input_file')
-    unique.add_argument("-u", required = False, dest = 'upper_limit', type = int,  default = 51, help = 'upper limit of the size of k-mers to analyse')   
+    unique.add_argument("-u", required = False, dest = 'upper_limit', type = int,  default = 51, help = 'upper limit of the size of k-mers to analyse')
     unique.add_argument("-l", required = False, dest = 'lower_limit', type = int, default = 7, help = 'lower limit of the size of k-mers to analyse')
     unique.add_argument("--cores", dest = 'cores', required = False, type = int, default = 1,  help = 'Number of CPU cores to use')
 
@@ -124,7 +124,7 @@ def main(command_line = None):
                 lower = args.lower_limit,
                 upper = args.upper_limit,
                 numcores = args.cores
-                )         
+                )
 
     elif args.mode == "merge":
         merger(
@@ -162,10 +162,12 @@ def main(command_line = None):
                 )
 
         os.chdir(f"{locationrepo}")
-        os.system(f"snakemake --cores {args.cores} --use-conda")
+        os.system(f"snakemake --cores {args.cores}")
 
     else:
         parser.print_usage()
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())  # pragma: no cover

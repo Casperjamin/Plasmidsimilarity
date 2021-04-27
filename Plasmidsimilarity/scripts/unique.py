@@ -1,5 +1,5 @@
 import pandas as pd
-from .plasmidread import kmercount
+from Plasmidsimilarity.scripts.plasmidread import kmercount
 from joblib import Parallel, delayed
 
 

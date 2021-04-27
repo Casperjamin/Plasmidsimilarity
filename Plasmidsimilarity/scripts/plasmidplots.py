@@ -5,7 +5,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
-from scripts.heatmap import minsize 
+from Plasmidsimilarity.scripts.heatmap import minsize 
 
 
 def write_leaves_order(list_of_leaves, outdir):
@@ -48,4 +48,3 @@ def cluster(input, output):
     Z, matrix, df = dataframe_to_clusters(input)
     plottree(output, Z, df.index)
     generate_pairwise_distance(matrix, df, output)
-
