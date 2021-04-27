@@ -2,7 +2,6 @@ from Bio import SeqIO
 import pandas as pd
 import warnings
 
-
 def reversecomp(inputseq):
     # generate reverse complementary of DNA seq
     revcomp = {
@@ -25,7 +24,6 @@ def reversecomp(inputseq):
         revcomstring += revcomp[i]
     return revcomstring
 
-
 def seq_to_kmercount(seq, kmerdict, kmersize):
     """
     DNA sequence and count number of kmers in the dictionary, and return this dictionary
@@ -42,7 +40,6 @@ def seq_to_kmercount(seq, kmerdict, kmersize):
         kmerdict[kmer] += 1
     return kmerdict
 
-
 def multiplecontigs(inputfasta):
     """
     returns True if more than 1 contig is found in file; otherwise return False
@@ -54,7 +51,6 @@ def multiplecontigs(inputfasta):
             return True
     return False
 
-
 def generate_output(kmer_dataframe, output_file, kmersize):
     """
     take kmer_dataframe of dictionaries of kmercounts, generate output files
@@ -62,7 +58,6 @@ def generate_output(kmer_dataframe, output_file, kmersize):
     kmer_dataframe.columns = [output_file.split("/")[-1]]
     kmer_dataframe = kmer_dataframe.T
     kmer_dataframe.to_hdf(f"{output_file}.hdf", key = 'df', format = 'fixed')
-
 
 def overlapper(sequence,kmersize):
     """
@@ -116,7 +111,7 @@ def kmercount(input_file, output_file, kmersize = 31, circular = True, write = T
 
 
     # added this if write block to reuse this code for the uniqueness module
-    if write == True:
+    if write:
         print(f"done counting kmers of {input_file}\t ")
         generate_output(df, output_file = output_file, kmersize = kmersize)
 
