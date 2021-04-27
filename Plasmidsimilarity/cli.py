@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 import argparse
 import sys
-
-
-
-
 from argparse import ArgumentParser
 import yaml
 import os
@@ -166,7 +162,7 @@ def main(command_line = None):
                 )
 
         os.chdir(f"{locationrepo}")
-        os.system(f"snakemake --cores {args.cores} --use-conda")
+        os.system(f"snakemake --cores {args.cores}")
 
     else:
         parser.print_usage()
