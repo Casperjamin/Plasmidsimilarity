@@ -45,3 +45,8 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+
+Acknowledgments
+---------------
+
+This work was supported by the Dutch workgroup Molecular typing for infectious diseases, the WMDI.
