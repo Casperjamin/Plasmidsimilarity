@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import argparse
 import sys
 from argparse import ArgumentParser
 import yaml
@@ -18,11 +17,14 @@ check_right_version()
 
 locationrepo = os.path.dirname(os.path.abspath(__file__))
 
+
 def get_absolute_path(path):
     return os.path.abspath(path)
 
+
 def file_name_generator(filepath):
     return os.path.splitext(os.path.basename(filepath))[0]
+
 
 def snakemake_in(samples, kmersize, outdir, minid, mincov):
     samplesdic = {}
@@ -45,17 +47,20 @@ def snakemake_in(samples, kmersize, outdir, minid, mincov):
         f.write(data)
 
 
-def main(command_line = None):
+def main(command_line=None):
     """Console script for Plasmidsimilarity."""
-    #add main parser object
+    # add main parser object
     print(locationrepo)
-    parser = ArgumentParser(description = "Plasmidsimilarity toolkit...")
+    parser = ArgumentParser(description="Plasmidsimilarity toolkit...")
 
-    #add sub parser object
-    subparsers = parser.add_subparsers(dest = "mode")
+    # add sub parser object
+    subparsers = parser.add_subparsers(dest="mode")
 
     # add module to determine uniqueness of each k-mer
-    unique = subparsers.add_parser("unique", help = 'determine the fraction of unique k-mers over a range of k-mers, output is sent to stdout')
+    unique = subparsers.add_parser("unique",
+            help = .join("determine the fraction of",
+                "unique k-mers over a range of k-mers,",
+                " output is sent to stdout")
     unique.add_argument("-i", required = True, dest = 'input_file')
     unique.add_argument("-u", required = False, dest = 'upper_limit', type = int,  default = 51, help = 'upper limit of the size of k-mers to analyse')
     unique.add_argument("-l", required = False, dest = 'lower_limit', type = int, default = 7, help = 'lower limit of the size of k-mers to analyse')
