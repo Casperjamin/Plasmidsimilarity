@@ -25,10 +25,10 @@ Set of scripts to compare plasmid sequences and its gene content
 
 Installation
 --------
-
-:bash:git clone https://github.com/casperjamin/Plasmidsimilarity
-:bash:cd Plasmidsimilarity
-:bash:pip install .
+.. code-block:: bash
+   git clone https://github.com/casperjamin/Plasmidsimilarity
+   cd Plasmidsimilarity
+   pip install .
 
 
 
