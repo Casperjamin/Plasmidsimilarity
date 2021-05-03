@@ -11,21 +11,21 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-'pyyaml',
-'pandas',
-'joblib',
-'networkx',
-'scipy',
-'snakemake<6',
-'matplotlib',
-'seaborn',
-'tables',
-'biopython'
+    'tables==3.6.1',
+    'pyyaml',
+    'pandas',
+    'joblib',
+    'networkx',
+    'scipy',
+    'snakemake<6',
+    'matplotlib',
+    'seaborn',
+    'biopython'
  ]
 
-setup_requirements = [ ]
+setup_requirements = []
 
-test_requirements = [ ]
+test_requirements = []
 
 setup(
     author="Casper Jamin",
