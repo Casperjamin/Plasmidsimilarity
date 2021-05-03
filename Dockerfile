@@ -30,7 +30,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   git \
   ncbi-blast+ \
   wget \
-  python3.6 \
   python3-pip && \
   apt-get autoclean && rm -rf /var/lib/apt/lists/*
 
