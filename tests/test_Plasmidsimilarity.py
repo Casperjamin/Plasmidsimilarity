@@ -14,6 +14,7 @@ class TestPlasmidsimilarity(unittest.TestCase):
         """Set up test fixtures, if any."""
         self.plasmidseq = "ACGTACGTACGTACGT"
         self.plasmidseqwithN = "ACTGNNNN"
+
     def tearDown(self):
         """Tear down test fixtures, if any."""
 
