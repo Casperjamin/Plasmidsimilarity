@@ -51,15 +51,13 @@ class DescriptionPlasmids:
         self.inputlist = inputlist
         self.output = output
         self.data = self.describeplasmids()
+        
     def describeplasmids(self):
         dataplasmids = []
         for i in self.inputlist:
             x = PlasmidDescribe(i)
             dataplasmids.append(pd.Series((x.description), name = i))
-       
+
         dataplasmids = pd.DataFrame(dataplasmids)
         print(dataplasmids)
         dataplasmids.to_csv(self.output, sep = '\t')
-
-
-
