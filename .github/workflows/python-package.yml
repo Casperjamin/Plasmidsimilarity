@@ -5,11 +5,7 @@ name: Python package
 
 on:
   push:
-<<<<<<< HEAD
     branches: [ master, dev ]
-=======
-    branches: [ master, dev]
->>>>>>> 354f107e9db01b189e408f2053426a3c52ffb63c
   pull_request:
     branches: [ master, dev ]
 
@@ -41,4 +37,3 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
