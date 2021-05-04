@@ -28,3 +28,4 @@ class TestPlasmidsimilarity(unittest.TestCase):
         assert nucl_count(self.plasmidseq)['T'] == 4
         assert nucl_count(self.plasmidseq)['N'] == 0
         assert nucl_count(self.plasmidseqwithN)['N'] == 4
+        assert nucl_count(self.plasmidseq)['D'] == 1
