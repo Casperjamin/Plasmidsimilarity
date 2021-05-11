@@ -8,6 +8,7 @@ config/*
 results/*
 logs/*
 config/*
+testoutput
 
 #python bytecode
 *pyc
