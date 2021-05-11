@@ -3,10 +3,9 @@ import pandas as pd
 
 class AbricateSample:
     def __init__(self, results):
-        self.df = pd.read_csv(results, sep="\t")[["#FILE",
-                                                "GENE",
-                                                "%COVERAGE",
-                                                 "%IDENTITY"]]
+        self.df = pd.read_csv(
+                        results,
+                        sep="\t")[["#FILE", "GENE", "%COVERAGE","%IDENTITY"]]
         self.clean = self.cleanup(self, self.df)
 
     @staticmethod
@@ -31,4 +30,9 @@ class AbricateSummary:
             listsofdf.append(i)
 
         df = pd.concat(listsofdf)
-        return pd.pivot_table(df, index="#FILE", columns="GENE", values="%IDENTITY", fill_value=0)
+        return pd.pivot_table(
+                            df,
+                            index="#FILE",
+                            columns="GENE",
+                            values="%IDENTITY",
+                            fill_value=0)
