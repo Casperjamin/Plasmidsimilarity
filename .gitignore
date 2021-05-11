@@ -9,6 +9,7 @@ results/*
 logs/*
 config/*
 testoutput
+Plasmidsimilarity/config/
 
 #python bytecode
 *pyc

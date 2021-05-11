@@ -57,10 +57,10 @@ def main(command_line=None):
     subparsers = parser.add_subparsers(dest="mode")
 
     # add module to determine uniqueness of each k-mer
-    unique = subparsers.add_parser("unique",
-            help = .join("determine the fraction of",
-                "unique k-mers over a range of k-mers,",
-                " output is sent to stdout")
+    unique = subparsers.add_parser(
+            "unique",
+            help="""determine the fraction of unique k-mers over
+            a range of k-mers, output is sent to stdout""")
     unique.add_argument("-i", required = True, dest = 'input_file')
     unique.add_argument("-u", required = False, dest = 'upper_limit', type = int,  default = 51, help = 'upper limit of the size of k-mers to analyse')
     unique.add_argument("-l", required = False, dest = 'lower_limit', type = int, default = 7, help = 'lower limit of the size of k-mers to analyse')

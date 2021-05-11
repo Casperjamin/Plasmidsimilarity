@@ -4,6 +4,7 @@
 
 import unittest
 from Plasmidsimilarity.scripts.describe import nucl_count
+from Plasmidsimilarity.cli import snakemake_in
 
 
 class TestPlasmidsimilarity(unittest.TestCase):
@@ -13,13 +14,30 @@ class TestPlasmidsimilarity(unittest.TestCase):
         """Set up test fixtures, if any."""
         self.plasmidseq = "ACGTACGTACGTACGT"
         self.plasmidseqwithN = "ACTGNNNN"
-
+        self.testsequences = [
+                    'Plasmidsimilarity/testdata/MG800340.1.fasta',
+                    'Plasmidsimilarity/testdata/MH061380.1.fasta',
+                    'Plasmidsimilarity/testdata/MK360916.1.fasta',
+                    'Plasmidsimilarity/testdata/NZ_CP038265.1.fasta',
+                    'Plasmidsimilarity/testdata/NZ_CPO40891.1.fasta'
+                    ]
+        self.snakemake_output = 'testoutput'
     def tearDown(self):
         """Tear down test fixtures, if any."""
 
 
     def test_describe(self):
         """Test something."""
+
+        # test snakemake workflow
+        snakemake_in(
+                samples=self.testsequences,
+                kmersize=31,
+                outdir=self.snakemake_output,
+                minid=90,
+                mincov=60
+        )
+
         # describe.py test
         assert nucl_count(self.plasmidseq)['A'] == 4
         assert nucl_count(self.plasmidseq)['C'] == 4
@@ -27,4 +45,5 @@ class TestPlasmidsimilarity(unittest.TestCase):
         assert nucl_count(self.plasmidseq)['T'] == 4
         assert nucl_count(self.plasmidseq)['N'] == 0
         assert nucl_count(self.plasmidseqwithN)['N'] == 4
-        assert nucl_count(self.plasmidseq)['D'] == 1
+
+        #
