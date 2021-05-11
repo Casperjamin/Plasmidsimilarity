@@ -17,8 +17,7 @@ def unique(input_file, lower, upper, numcores=1):
     sends for each size of k the fraction of unique k-mers
     """
     inputs = list(range(lower, upper + 1))
-    processed = Parallel(
-            n_jobs=numcores)(
+    processed = Parallel(n_jobs=numcores)(
                 delayed(determine_unique)(i, input_file) for i in inputs)
     [print(x[0], '\t', x[1]) for x in processed]
 
