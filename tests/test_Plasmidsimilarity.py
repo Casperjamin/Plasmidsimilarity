@@ -3,7 +3,6 @@
 """Tests for `Plasmidsimilarity` package."""
 
 import unittest
-import pytest
 from Plasmidsimilarity.scripts.describe import nucl_count
 
 
