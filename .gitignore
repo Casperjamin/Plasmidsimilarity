@@ -10,7 +10,7 @@ logs/*
 config/*
 testoutput
 Plasmidsimilarity/config/
-
+Plasmidsimilarity/.snakemake/
 #python bytecode
 *pyc
 __pycache__
