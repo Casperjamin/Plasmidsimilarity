@@ -2,10 +2,11 @@ import pandas as pd
 from scipy.cluster.hierarchy import linkage, dendrogram
 from scipy.spatial.distance import pdist, squareform
 import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
-from Plasmidsimilarity.scripts.heatmap import minsize 
+from Plasmidsimilarity.scripts.heatmap import minsize
+
+matplotlib.use('Agg')
 
 
 def write_leaves_order(list_of_leaves, outdir):
@@ -20,18 +21,23 @@ def plottree(output, cluster, labels):
     dn = plt.figure(figsize=[width, height])
     dn = dendrogram(cluster, orientation="right", labels=labels)
     list_of_leaves = labels[dn['leaves']]
-    write_leaves_order(list_of_leaves = list_of_leaves, outdir = output)
+    write_leaves_order(list_of_leaves=list_of_leaves, outdir=output)
     plt.xlabel("Jaccard dissimilarity")
     dn = plt.tight_layout()
 
     dn = plt.savefig(f"{output}/tree.png")
 
+
 def generate_pairwise_distance(matrix, df, output):
-    labeledmatrix = pd.DataFrame(squareform(matrix), index = df.index, columns = df.index)
-    labeledmatrix.to_csv(f"{output}/distances_matrix.tsv", sep = '\t')
+    labeledmatrix = pd.DataFrame(
+            squareform(matrix),
+            index=df.index,
+            columns=df.index
+              )
+    labeledmatrix.to_csv(f"{output}/distances_matrix.tsv", sep='\t')
     labeledmatrix = labeledmatrix.unstack().reset_index()
     labeledmatrix.columns = ['Sample 1', 'Sample 2', 'Jaccard dissimilarity']
-    labeledmatrix.to_csv(f"{output}/distances_molten.tsv", sep = "\t")
+    labeledmatrix.to_csv(f"{output}/distances_molten.tsv", sep="\t")
 
 
 def dataframe_to_clusters(input):
@@ -42,6 +48,7 @@ def dataframe_to_clusters(input):
     print("Clustering distances  \n ")
     Z = linkage(matrix)
     return Z, matrix, df
+
 
 def cluster(input, output):
     os.system(f"mkdir -p {output}")
