@@ -4,7 +4,6 @@
 
 import unittest
 from Plasmidsimilarity.scripts.describe import nucl_count
-from Plasmidsimilarity.cli import snakemake_in
 
 
 class TestPlasmidsimilarity(unittest.TestCase):
