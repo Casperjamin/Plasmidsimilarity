@@ -42,7 +42,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="Set of scripts to compare plasmid sequences and its gene content",
+    description="Comparing plasmid sequences and its gene content",
     entry_points={
         'console_scripts': [
             'Plasmidsimilarity=Plasmidsimilarity.cli:main',
@@ -54,7 +54,8 @@ setup(
     include_package_data=True,
     keywords='Plasmidsimilarity',
     name='Plasmidsimilarity',
-    packages=find_packages(include=['Plasmidsimilarity', 'Plasmidsimilarity.*']),
+    packages=find_packages(
+        include=['Plasmidsimilarity', 'Plasmidsimilarity.*']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
