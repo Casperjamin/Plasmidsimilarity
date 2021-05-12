@@ -1,0 +1,13 @@
+- name: Linting
+  uses: snakemake/snakemake-github-action@v1.18.0
+  with:
+    directory: '.test'
+    snakefile: 'Plasmidsimilarity/Snakefile'
+    args: '--lint'
+- name: Testing
+  uses: snakemake/snakemake-github-action@v1.18.0
+  with:
+    directory: '.test'
+    snakefile: 'workflow/Snakefile'
+    args: '--cores 12 --use-conda --conda-cleanup-pkgs cache'
+    stagein: 'conda install -c bioconda abricate=1.0.1' 
