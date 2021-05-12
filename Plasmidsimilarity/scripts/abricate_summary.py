@@ -5,7 +5,7 @@ class AbricateSample:
     def __init__(self, results):
         self.df = pd.read_csv(
                         results,
-                        sep="\t")[["#FILE", "GENE", "%COVERAGE","%IDENTITY"]]
+                        sep="\t")[["#FILE", "GENE", "%COVERAGE", "%IDENTITY"]]
         self.clean = self.cleanup(self, self.df)
 
     @staticmethod
