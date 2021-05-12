@@ -1,3 +1,18 @@
+name: SnakemakeTests
+
+on:
+  push:
+    branches: [ master, dev ]
+  pull_request:
+    branches: [ master, dev ]
+
+
+jobs:
+  Formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Formatting
 - name: Linting
   uses: snakemake/snakemake-github-action@v1.18.0
   with:
@@ -8,6 +23,6 @@
   uses: snakemake/snakemake-github-action@v1.18.0
   with:
     directory: '.test'
-    snakefile: 'workflow/Snakefile'
+    snakefile: 'Plasmidsimilarity/Snakefile'
     args: '--cores 12 --use-conda --conda-cleanup-pkgs cache'
     stagein: 'conda install -c bioconda abricate=1.0.1' 
