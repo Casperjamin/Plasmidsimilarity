@@ -11,9 +11,6 @@ from Plasmidsimilarity.scripts.plasmidread import kmercount
 from Plasmidsimilarity.scripts.unique import unique as uniq
 
 
-from Plasmidsimilarity.scripts.checkpythonversion import check_right_version
-
-check_right_version()
 
 locationrepo = os.path.dirname(os.path.abspath(__file__))
 
