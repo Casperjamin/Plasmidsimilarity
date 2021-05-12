@@ -24,12 +24,12 @@ Set of scripts to compare plasmid sequences and its gene content
 
 
 Installation
---------
-```
+------------
+`
 git clone https://github.com/casperjamin/Plasmidsimilarity
 cd Plasmidsimilarity
 pip install .
-```
+`
 
 
 
