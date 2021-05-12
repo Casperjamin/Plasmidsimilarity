@@ -83,57 +83,91 @@ def main(command_line=None):
 
     # add snakemake pipeline to completely run fasta to clustered output
     snakemake = subparsers.add_parser("snakemake",
-                                        help='''run full pipeline from fasta to
-                                        clustering and determining AMR,
-                                        virulence and ORIs'''
-                                     )
-    snakemake.add_argument("-i",
-                        required=True,
-                        dest="input_files",
-                        nargs="+"
-                        )
-    snakemake.add_argument("--cores",
-                         dest='cores',
-                         required=True,
-                         type=int,
-                         help='Number of CPU cores to use'
-                         )
-                             snakemake.add_argument("-k", required=False, dest="kmersize", type=int, default=31)
-    snakemake.add_argument("--mincov", required=False, dest="mincov", type=float, default=60)
-    snakemake.add_argument("--minid", required=False, dest="minid", type=float, default=90)
+                                      help='''run full pipeline from fasta to
+                                      clustering and determining AMR,
+                                      virulence and ORIs''')
+    snakemake.add_argument(
+                "-i",
+                required=True,
+                dest="input_files",
+                nargs="+"
+                )
+    snakemake.add_argument(
+                            "--cores",
+                            dest='cores',
+                            required=True,
+                            type=int,
+                            help='Number of CPU cores to use'
+                            )
+
+    snakemake.add_argument("-k", required=False,
+                           dest="kmersize", type=int, default=31)
+    snakemake.add_argument("--mincov", required=False,
+                           dest="mincov", type=float, default=60)
+    snakemake.add_argument("--minid", required=False,
+                           dest="minid", type=float, default=90)
     snakemake.add_argument("-o", required=True, dest="outdir")
 
     # add subparser for extracting plasmidlike elements from assembly graph
-    extract = subparsers.add_parser("extract", help="Takes a GFA file and output different fasta files containing binned plasmid contigs. This is based on the connectivity in the assembly graph")
+    extract = subparsers.add_parser("extract",
+                                    help='''Takes a GFA file and output
+                                    different fasta files containing binned
+                                    plasmid contigs. This is based on the
+                                    connectivity in the assembly graph'''
+                                    )
     extract.add_argument("-i", required=True, dest="input_file")
     extract.add_argument("-o", required=True, dest="output_file")
-    extract.add_argument("-u", required=False, dest="upper_limit", default=1000000, type=int)
-    extract.add_argument("-l", required=False, dest="lower_limit", default=1000, type=int)
+    extract.add_argument("-u", required=False, dest="upper_limit",
+                         default=1000000, type=int)
+    extract.add_argument("-l", required=False, dest="lower_limit",
+                         default=1000, type=int)
 
     # add subparser that handles kmercounting
-    count = subparsers.add_parser("count", help = "Takes a fasta file and counts the occurences of kmers of specified length, it returns a hdf file containing a pandas dataframe where each fasta entry is a new row in the dataframe")
-    count.add_argument("-i", required = True, dest ="input_file")
-    count.add_argument("-o", required = True, dest = "output_file")
-    count.add_argument("-k", required = False, dest = "kmersize", type = int, default = 31)
-    count.add_argument("-c", required = False, dest = "circular", action = 'store_true', default = True, help = 'if marked, sequences are considered circular and therefore the part of the sequence going from the end to the beginning of the contig will be used for kmer counting')
+    count = subparsers.add_parser(
+                                  "count",
+                                  help='''Takes a fasta file and counts the
+                                  occurences of kmers of specified length,
+                                  it returns a hdf file containing a pandas
+                                  dataframe where each fasta entry is a new
+                                  row in the dataframe'''
+                                  )
+    count.add_argument("-i", required=True, dest="input_file")
+    count.add_argument("-o", required=True, dest="output_file")
+    count.add_argument("-k", required=False,
+                       dest="kmersize", type=int, default=31)
+    count.add_argument(
+                "-c",
+                required=False,
+                dest="circular",
+                action='store_true',
+                default=True,
+                help='''if marked, sequences are considered circular
+                and therefore the part of the sequence going
+                from the end to the beginning
+                of the contig will be used for kmer counting'''
+                )
 
     # add subparser to merges the kmer counts
-    merge = subparsers.add_parser("merge", help = "Takes multiple kmer count files and merge them into one file, required to do clustering on")
-    merge.add_argument("-i", required = True, dest = "input_files", nargs = "+")
-    merge.add_argument("-o", required = True, dest = "output_file")
-
+    merge = subparsers.add_parser(
+                                "merge",
+                                help='''Takes multiple kmer count
+                                files and merge them
+                                into one file, required to do clustering on'''
+                                )
+    merge.add_argument("-i", required=True, dest="input_files", nargs="+")
+    merge.add_argument("-o", required=True, dest="output_file")
 
     # add subparser that handles the clustering and plotting
     cluster = subparsers.add_parser("cluster",
-                            help="""Takes a merged kmercount file and
-                            cluster the sequences based on Jaccard
-                             dissimilarity, it generates a dendrogram
-                             showing the relationship among sequences"""
-                             )
+                                    help="""Takes a merged kmercount file and
+                                    cluster the sequences based on Jaccard
+                                    dissimilarity, it generates a dendrogram
+                                    showing the relationship among sequences"""
+                                    )
     cluster.add_argument("-i", required=True, dest="input_file")
     cluster.add_argument("-o", required=True, dest="output_file")
 
-    #add subparser to convert a gfa to fasta
+    # add subparser to convert a gfa to fasta
     convert = subparsers.add_parser("convert",
                                     help="convert a GFA to a fasta file")
     convert.add_argument("-i", required=True, dest="input_file")
