@@ -28,7 +28,6 @@ class TestPlasmidsimilarity(unittest.TestCase):
     def test_describe(self):
         """Test something."""
 
-
         # describe.py test
         assert nucl_count(self.plasmidseq)['A'] == 4
         assert nucl_count(self.plasmidseq)['C'] == 4
@@ -36,8 +35,3 @@ class TestPlasmidsimilarity(unittest.TestCase):
         assert nucl_count(self.plasmidseq)['T'] == 4
         assert nucl_count(self.plasmidseq)['N'] == 0
         assert nucl_count(self.plasmidseqwithN)['N'] == 4
-<<<<<<< HEAD
-
-        #
-=======
->>>>>>> 1b2b05d76e39a8a85abff6d3aa38c62475a08247
