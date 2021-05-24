@@ -3,8 +3,7 @@ import networkx as nx
 
 class assemblygraph():
     def __init__(self, inputgraph):
-        self.graph = graph_read(inputgraph)[0]
-        self.contigs = graph_read(inputgraph)[1]
+        self.graph, self.contigs = graph_read(inputgraph)
 
     def graph_to_fasta(self, outputloc):
         with open(f"{outputloc}.fasta", "w") as f:
@@ -19,11 +18,10 @@ class assemblygraph():
 
         count = 0
         for element in graphcomponents:
-
             size = sum(
-                [int(nx.get_node_attributes(self.graph, "weight")[str(i)])
-                    for i in element]
+                [len(self.contigs[x]) for x in element]
                 )
+
             print(f"graph element of size {size} encountered")
             if not lower < size < upper:
                 print(f'''The size of this connected component
