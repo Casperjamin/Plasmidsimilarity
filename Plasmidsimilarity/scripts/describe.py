@@ -5,10 +5,11 @@ import Bio.SeqIO as SeqIO
 def nucl_count(sequence):
     """determine counts of each letter in a sequence,
     return dictionary with counts"""
-    nucl = {'A': 0, 'G': 0, 'C':  0, 'G': 0, 'N': 0}
+    nucl = {'A': 0, 'C': 0, 'G':  0, 'T': 0, 'N': 0}
 
     for letter in sequence:
         if letter not in nucl:
+            print(f'unexpected nucleotide found: "{letter}"')
             nucl[letter] = 0
         nucl[letter] += 1
 
@@ -42,7 +43,7 @@ class PlasmidDescribe:
             "T nucl": nucleotides['T'],
             "N nucl": nucleotides['N'],
             "other nucleotides": numBP - sum(
-                [nucleotides[x] for x in ['A', 'C', 'G', 'T']])
+                [nucleotides[x] for x in ['A', 'C', 'G', 'T', 'N']])
             }
         return results
 
