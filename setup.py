@@ -11,7 +11,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'tables==3.6.1',
+    'tables',
     'pyyaml',
     'pandas',
     'joblib',
