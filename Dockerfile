@@ -49,13 +49,11 @@ $PATH"\
     LC_ALL=C
 
 # check dependencies, setup db's, make working directory /data
-# tests now run as part of travis, instead of in dockerfile
 RUN abricate --check && \
     abricate --setupdb && \
     mkdir /data
 
 # install plasmidsimilarity
-
 RUN git clone https://github.com/casperjamin/Plasmidsimilarity.git
 WORKDIR Plasmidsimilarity
 RUN pip3 install .
