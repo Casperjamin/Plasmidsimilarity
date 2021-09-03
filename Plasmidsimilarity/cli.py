@@ -46,7 +46,6 @@ def snakemake_in(samples, kmersize, outdir, minid, mincov):
 def main(command_line=None):
     """Console script for Plasmidsimilarity."""
     # add main parser object
-    print(locationrepo)
     parser = ArgumentParser(description="Plasmidsimilarity toolkit...")
 
     # add sub parser object
