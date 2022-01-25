@@ -33,12 +33,6 @@ to install::
 
 
 
-
-Features
---------
-
-* TODO
-
 Credits
 -------
 
