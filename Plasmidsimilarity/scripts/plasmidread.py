@@ -17,7 +17,8 @@ def reversecomp(inputseq):
         "H": "D",
         "Y": "R",
         "R": "Y",
-        "N": "N"}
+        "N": "N",
+        "W": "W"}
 
     seq = inputseq[::-1]
     revcomstring = ""
